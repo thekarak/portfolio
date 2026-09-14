@@ -5,291 +5,383 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sourasis Karak — Machine Learning & Data Science</title>
   <meta name="description" content="Sourasis Karak — 2nd year CS undergrad at JIS College of Engineering focused on Machine Learning, Data Science, predictive modeling, and resilient systems." />
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-theme="dark">
+<body data-theme="light">
 
-  <div class="noise" aria-hidden="true"></div>
+  <!-- Boot loader -->
+  <div id="boot-loader" class="boot-loader" role="status" aria-label="Loading portfolio">
+    <div class="boot-content">
+      <div class="boot-monogram" aria-hidden="true">
+        <span class="first">S</span><span class="last">K</span>
+      </div>
+      <p class="boot-sub">sourasis karak</p>
+      <div class="boot-bar-wrap" aria-hidden="true"><span id="boot-fill" class="boot-bar-fill"></span></div>
+      <div class="boot-bottom"><span id="boot-pct">00%</span><span>click to skip</span></div>
+    </div>
+  </div>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
 
   <!-- Topbar -->
   <header class="topbar">
-    <a href="#top" class="mark" title="Sourasis Karak — Back to top">SK</a>
-    <nav class="topnav">
-      <a href="#work">work</a>
-      <a href="#skills">skills</a>
-      <a href="#contact">contact</a>
-      <button id="open-resume-btn" class="nav-resume-btn" aria-label="Open Resume Preview">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-        resume
-      </button>
-      <button id="theme-toggle" class="theme-toggle" aria-label="Switch between dark and light mode">
-        <span class="dot"></span>
-      </button>
-    </nav>
+    <a href="#top" class="mark" title="Back to top">SK</a>
+    <a href="#work">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+      <span>work</span>
+    </a>
+    <a href="#journey">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path></svg>
+      <span>journey</span>
+    </a>
+    <a href="#skills">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+      <span>skills</span>
+    </a>
+    <a href="#notes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+      <span>notes</span>
+    </a>
+    <a href="#contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+      <span>contact</span>
+    </a>
+    <button id="open-resume-btn" aria-label="Open Resume Preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      <span>resume</span>
+    </button>
+    <button id="theme-toggle" class="theme-btn" aria-label="Switch between dark and light mode">
+      <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+    <button id="menu-toggle" class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+    </button>
   </header>
 
-  <main id="top">
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="#work">work</a>
+    <a href="#journey">journey</a>
+    <a href="#skills">skills</a>
+    <a href="#notes">notes</a>
+    <a href="#contact">contact</a>
+    <button id="mobile-resume-btn">resume</button>
+  </div>
 
-    <!-- Hero Section with Avatar -->
-    <section class="hero">
-      <div class="hero-header">
-        <div class="avatar-container">
-          <div class="avatar-frame">
-            <img src="assets/avatar.png" alt="Sourasis Karak" class="hero-avatar" />
-          </div>
-          <span class="status-pulse" title="Available for internships & collaborations"></span>
-        </div>
-        <div class="hero-title-group">
-          <p class="hero-eyebrow">Kalyani, West Bengal, India · UTC+05:30</p>
-          <h1 class="hero-name">
-            Sourasis Karak<span class="cursor" aria-hidden="true">_</span>
-          </h1>
+  <main class="container" id="top">
+
+    <!-- Hero -->
+    <section class="hero-row">
+      <div class="hero-text">
+        <h1>Sourasis Karak</h1>
+        <p class="hero-subtitle">2nd-year CS undergrad focused on Machine Learning, Data Science, and predictive modeling · <span id="local-time" style="color:var(--text-muted)">--:--:-- IST</span></p>
+        <div class="hero-links">
+          <a href="https://github.com/thekarak" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.15c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/sourasiskarak" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z"/></svg>
+          </a>
+          <a href="https://x.com/imskarak" target="_blank" rel="noopener" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>
+          </a>
+          <a href="mailto:soykarak@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          </a>
+          <a href="assets/resume.pdf" download="Sourasis_Karak_Resume.pdf" class="cv-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M12 18v-6"></path><path d="m9 15 3 3 3-3"></path></svg>
+            <span>CV</span>
+          </a>
         </div>
       </div>
-
-      <p class="hero-role">2nd-year CS undergrad focused on Machine Learning, Data Science, and predictive modeling.</p>
-      <p class="hero-bio">
-        Specializing in exploratory data analysis, statistical modeling, and leakage-free ML ensembles. Experienced in designing robust validation frameworks, high-dimensional feature engineering, and competitive predictive pipelines.
-      </p>
-
-      <div class="hero-actions">
-        <button id="hero-preview-btn" class="btn btn-primary" aria-label="Preview resume modal">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-          Preview Resume
-        </button>
-        <a href="assets/resume.pdf" download="Sourasis_Karak_Resume.pdf" class="btn btn-outline" aria-label="Download resume PDF">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          Download CV
-        </a>
-        <button id="hero-copy-email" class="btn btn-outline copy-trigger" data-copy="soykarak@gmail.com" aria-label="Copy email address to clipboard">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          <span class="copy-label">Copy Email</span>
-        </button>
+      <div class="hero-avatar">
+        <img src="assets/avatar.png" alt="Sourasis Karak" />
       </div>
-
-      <ul class="hero-links">
-        <li><a href="https://github.com/thekarak" target="_blank" rel="noopener">github</a></li>
-        <li><a href="https://www.linkedin.com/in/sourasiskarak" target="_blank" rel="noopener">linkedin</a></li>
-        <li><a href="https://x.com/imskarak" target="_blank" rel="noopener">x / twitter</a></li>
-        <li><a href="mailto:soykarak@gmail.com">email</a></li>
-      </ul>
     </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <h2>About</h2>
+      <p class="about-text">
+        Specializing in exploratory data analysis, statistical modeling, and leakage-free ML ensembles.
+        Experienced in designing robust validation frameworks, high-dimensional feature engineering,
+        and competitive predictive pipelines. Open to internships, research collaborations, or
+        discussing engineering problems in data science and machine learning.
+      </p>
+      <button id="hero-copy-email" class="about-btn copy-trigger" data-copy="soykarak@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <span class="copy-label">Copy Email</span>
+      </button>
+    </section>
+
+    <!-- Stats -->
+    <dl class="stats-band reveal-on-scroll">
+      <div class="stat">
+        <dt>best OOF F1</dt>
+        <dd><span class="stat-num" data-count="0.9995" data-decimals="4">0.0000</span></dd>
+      </div>
+      <div class="stat">
+        <dt>recall</dt>
+        <dd><span class="stat-num" data-count="100" data-suffix="%">0%</span></dd>
+      </div>
+      <div class="stat">
+        <dt>features</dt>
+        <dd><span class="stat-num" data-count="77">0</span></dd>
+      </div>
+      <div class="stat">
+        <dt>shipped</dt>
+        <dd><span class="stat-num" data-count="1">0</span></dd>
+      </div>
+    </dl>
 
     <div class="rule"></div>
 
-    <!-- Work Section with Interactive Spotlight Animations -->
+    <!-- Featured Work -->
     <section id="work" class="section reveal-on-scroll">
-      <div class="section-header">
-        <h2 class="section-title">featured work</h2>
-        <div class="filter-bar" role="tablist" aria-label="Filter projects">
-          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">all</button>
-          <button class="filter-btn" data-filter="ds-ml" role="tab" aria-selected="false">data science & ml</button>
-          <button class="filter-btn" data-filter="web" role="tab" aria-selected="false">web & llm</button>
-          <button class="filter-btn" data-filter="research" role="tab" aria-selected="false">research</button>
-        </div>
-      </div>
+      <h2>Featured work</h2>
 
       <div class="projects-grid">
-
-        <!-- Analyticus -->
-        <article class="project interactive-card" data-category="ds-ml">
-          <div class="card-glow"></div>
-          <div class="project-head">
-            <div class="project-title-wrap">
-              <h3>Analyticus</h3>
-              <span class="project-subtitle">Data Science · Athlete Injury Risk & Recovery Prediction</span>
-            </div>
-            <span class="tag honor-tag">Team Leader · IIT Guwahati PlayHack ML</span>
-          </div>
-
+        <article class="project-card" data-category="ds-ml">
+          <h3>Analyticus</h3>
+          <p class="project-subtitle">Data Science · Athlete Injury Risk & Recovery Prediction</p>
           <p class="project-desc">
             Designed a leakage-free validation pipeline with grouped 5-fold cross-validation and fold-only-fit preprocessing (zero athlete overlap between train and test splits). Engineered a dual-stage ensemble (XGBoost, LightGBM, CatBoost) over 77 biometric and activity features, achieving an out-of-fold <strong>F1-score of 0.9995</strong> and <strong>100% recall</strong> with zero false negatives. Calibrated decision threshold from 0.5 to 0.12 to counter strict competition penalties.
           </p>
-
           <div class="project-badges">
-            <span class="badge">Data Science</span>
-            <span class="badge">XGBoost</span>
-            <span class="badge">LightGBM</span>
-            <span class="badge">CatBoost</span>
-            <span class="badge">Scikit-Learn</span>
-            <span class="badge">Grouped 5-Fold CV</span>
-            <span class="badge">Pandas</span>
+            <span class="badge">Data Science</span><span class="badge">XGBoost</span><span class="badge">LightGBM</span><span class="badge">CatBoost</span><span class="badge">Scikit-Learn</span><span class="badge">Grouped 5-Fold CV</span><span class="badge">Pandas</span>
           </div>
-
           <div class="project-links">
-            <a class="project-link" href="https://github.com/thekarak/Analyticus" target="_blank" rel="noopener">
-              <span>source code</span>
-              <span class="link-arrow">↗</span>
-            </a>
+            <a class="project-link" href="https://github.com/thekarak/Analyticus" target="_blank" rel="noopener">source code ↗</a>
           </div>
         </article>
 
-        <!-- RoastMeBuddy -->
-        <article class="project interactive-card" data-category="web">
-          <div class="card-glow"></div>
-          <div class="project-head">
-            <div class="project-title-wrap">
-              <h3>RoastMeBuddy</h3>
-              <span class="project-subtitle">AI-Powered Resume Feedback Platform</span>
-            </div>
-            <span class="tag live-badge">
-              <span class="live-dot"></span>
-              Solo Developer · Live Production
-            </span>
-          </div>
-
+        <article class="project-card" data-category="web">
+          <h3>RoastMeBuddy</h3>
+          <p class="project-subtitle">AI-Powered Resume Feedback Platform</p>
           <p class="project-desc">
             Built and shipped a responsive web application delivering structured, context-aware feedback on technical CVs using LLM APIs. Implemented prompt engineering with strict JSON output schemas to guarantee deterministic scoring and parsing across heterogeneous resume formats. Deployed live on Vercel with asynchronous API streaming.
           </p>
-
           <div class="project-badges">
-            <span class="badge">LLM APIs</span>
-            <span class="badge">JSON Schema</span>
-            <span class="badge">Vercel</span>
-            <span class="badge">Prompt Engineering</span>
-            <span class="badge">JavaScript</span>
+            <span class="badge">LLM APIs</span><span class="badge">JSON Schema</span><span class="badge">Vercel</span><span class="badge">Prompt Engineering</span><span class="badge">JavaScript</span>
           </div>
-
           <div class="project-links">
-            <a class="project-link primary-action" href="https://roastmebuddy.vercel.app" target="_blank" rel="noopener">
-              <span>live demo</span>
-              <span class="link-arrow">↗</span>
-            </a>
-            <a class="project-link" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">
-              <span>source code</span>
-              <span class="link-arrow">↗</span>
-            </a>
+            <a class="project-link primary" href="https://roastmebuddy.vercel.app" target="_blank" rel="noopener">live demo ↗</a>
+            <a class="project-link" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">source code ↗</a>
           </div>
         </article>
 
-        <!-- Reducing LLM Hallucinations -->
-        <article class="project interactive-card" data-category="ds-ml research">
-          <div class="card-glow"></div>
-          <div class="project-head">
-            <div class="project-title-wrap">
-              <h3>Reducing LLM Hallucinations</h3>
-              <span class="project-subtitle">Empirical Evaluation of Retrieval Dynamics</span>
-            </div>
-            <span class="tag">research</span>
-          </div>
-
+        <article class="project-card" data-category="ds-ml research">
+          <h3>Reducing LLM Hallucinations</h3>
+          <p class="project-subtitle">Empirical Evaluation of Retrieval Dynamics</p>
           <p class="project-desc">
             An empirical investigation on retrieval-augmented generation: isolating benchmarks where RAG genuinely mitigates hallucination versus where contextual noise shifts error modes into subtle retrieval failures.
           </p>
-
           <div class="project-badges">
-            <span class="badge">RAG</span>
-            <span class="badge">Evaluation Benchmarks</span>
-            <span class="badge">NLP</span>
-            <span class="badge">Python</span>
+            <span class="badge">RAG</span><span class="badge">Eval Benchmarks</span><span class="badge">NLP</span><span class="badge">Python</span>
           </div>
-
           <div class="project-links">
-            <a class="project-link" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">
-              <span>source code</span>
-              <span class="link-arrow">↗</span>
-            </a>
+            <a class="project-link" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">source code ↗</a>
           </div>
         </article>
-
       </div>
     </section>
 
     <div class="rule"></div>
 
-    <!-- Redesigned Skills Dashboard -->
+    <!-- Journey: timeline -->
+    <section id="journey" class="section reveal-on-scroll">
+      <h2>Journey</h2>
+      <ol class="timeline">
+        <li class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">AN</div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <h3>Team Leader — Analyticus</h3>
+              <span class="timeline-date">2025 — present</span>
+            </div>
+            <div class="timeline-meta">
+              <span class="role">IIT Guwahati PlayHack ML · hackathon</span>
+            </div>
+            <p class="timeline-desc">Leading a leakage-free injury-risk pipeline: grouped 5-fold CV, fold-only-fit preprocessing, dual-stage gradient-boosting ensemble over 77 features.</p>
+            <div class="timeline-tags"><span class="badge">XGBoost</span><span class="badge">LightGBM</span><span class="badge">CatBoost</span></div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">RB</div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <h3>Solo Developer — RoastMeBuddy</h3>
+              <span class="timeline-date">2025 — present</span>
+            </div>
+            <div class="timeline-meta">
+              <span class="role">live production · vercel</span>
+            </div>
+            <p class="timeline-desc">Designed, built and shipped an LLM resume-feedback app with strict JSON schemas, deterministic scoring and streaming APIs.</p>
+            <div class="timeline-tags"><span class="badge">LLM APIs</span><span class="badge">Vercel</span><span class="badge">JavaScript</span></div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">RG</div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <h3>Independent Research — RAG evaluation</h3>
+              <span class="timeline-date">2024 — present</span>
+            </div>
+            <div class="timeline-meta">
+              <span class="role">self-directed · nlp</span>
+            </div>
+            <p class="timeline-desc">Empirical study of where retrieval-augmented generation truly reduces hallucination vs. where retrieval noise shifts failure modes.</p>
+            <div class="timeline-tags"><span class="badge">RAG</span><span class="badge">Eval benchmarks</span><span class="badge">Python</span></div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">JC</div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <h3>B.Tech, Computer Science</h3>
+              <span class="timeline-date">2024 — 2028</span>
+            </div>
+            <div class="timeline-meta">
+              <span class="role">JIS College of Engineering · 2nd year</span>
+            </div>
+            <p class="timeline-desc">Coursework + obsessive side-quests in statistical modeling, validation design and shipping small tools to production.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <div class="rule"></div>
+
+    <!-- Skills -->
     <section id="skills" class="section reveal-on-scroll">
-      <div class="section-header">
-        <h2 class="section-title">technical stack</h2>
-        <span class="section-hint">technologies & domain toolkit</span>
+      <h2>Skills</h2>
+
+      <div class="skills-filter" role="tablist" aria-label="Filter skills">
+        <button class="skill-tab active" data-skill-filter="all" role="tab" aria-selected="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" x2="20.05" y1="8" y2="17.94"></line><line x1="9.69" x2="21.17" y1="8" y2="8"></line><line x1="7.38" x2="13.12" y1="12" y2="2.06"></line><line x1="9.69" x2="3.95" y1="16" y2="6.06"></line><line x1="14.31" x2="2.83" y1="16" y2="16"></line><line x1="16.62" x2="10.88" y1="12" y2="21.94"></line></svg>
+          <span>All Skills</span>
+          <span class="count">23</span>
+        </button>
+        <button class="skill-tab" data-skill-filter="ds" role="tab" aria-selected="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          <span>DS & ML</span>
+          <span class="count">10</span>
+        </button>
+        <button class="skill-tab" data-skill-filter="backend" role="tab" aria-selected="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+          <span>Backend</span>
+          <span class="count">5</span>
+        </button>
+        <button class="skill-tab" data-skill-filter="lang" role="tab" aria-selected="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span>Languages</span>
+          <span class="count">8</span>
+        </button>
       </div>
 
       <div class="skills-dashboard">
-
-        <!-- Category 1 -->
-        <div class="skill-category">
+        <div class="skill-category" data-skill="ds">
           <div class="skill-cat-header">
-            <span class="cat-indicator">01</span>
+            <span class="cat-num">01</span>
             <h3>Data Science & Machine Learning</h3>
           </div>
-          <div class="skill-chips-grid">
-            <span class="skill-chip"><span class="chip-dot"></span>Statistical Modeling</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Exploratory Data Analysis</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Feature Engineering</span>
-            <span class="skill-chip"><span class="chip-dot"></span>XGBoost</span>
-            <span class="skill-chip"><span class="chip-dot"></span>LightGBM</span>
-            <span class="skill-chip"><span class="chip-dot"></span>CatBoost</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Scikit-Learn</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Grouped K-Fold CV</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Pandas</span>
-            <span class="skill-chip"><span class="chip-dot"></span>NumPy</span>
+          <div class="skill-chips">
+            <span class="skill-chip"><span class="dot"></span>Statistical Modeling</span>
+            <span class="skill-chip"><span class="dot"></span>Exploratory Data Analysis</span>
+            <span class="skill-chip"><span class="dot"></span>Feature Engineering</span>
+            <span class="skill-chip"><span class="dot"></span>XGBoost</span>
+            <span class="skill-chip"><span class="dot"></span>LightGBM</span>
+            <span class="skill-chip"><span class="dot"></span>CatBoost</span>
+            <span class="skill-chip"><span class="dot"></span>Scikit-Learn</span>
+            <span class="skill-chip"><span class="dot"></span>Grouped K-Fold CV</span>
+            <span class="skill-chip"><span class="dot"></span>Pandas</span>
+            <span class="skill-chip"><span class="dot"></span>NumPy</span>
           </div>
         </div>
 
-        <!-- Category 2 -->
-        <div class="skill-category">
+        <div class="skill-category" data-skill="backend">
           <div class="skill-cat-header">
-            <span class="cat-indicator">02</span>
+            <span class="cat-num">02</span>
             <h3>Backend & API Systems</h3>
           </div>
-          <div class="skill-chips-grid">
-            <span class="skill-chip"><span class="chip-dot"></span>FastAPI</span>
-            <span class="skill-chip"><span class="chip-dot"></span>RESTful APIs</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Microservices</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Prompt Engineering</span>
-            <span class="skill-chip"><span class="chip-dot"></span>LLM APIs & Streaming</span>
+          <div class="skill-chips">
+            <span class="skill-chip"><span class="dot"></span>FastAPI</span>
+            <span class="skill-chip"><span class="dot"></span>RESTful APIs</span>
+            <span class="skill-chip"><span class="dot"></span>Microservices</span>
+            <span class="skill-chip"><span class="dot"></span>Prompt Engineering</span>
+            <span class="skill-chip"><span class="dot"></span>LLM APIs & Streaming</span>
           </div>
         </div>
 
-        <!-- Category 3 -->
-        <div class="skill-category">
+        <div class="skill-category" data-skill="lang">
           <div class="skill-cat-header">
-            <span class="cat-indicator">03</span>
+            <span class="cat-num">03</span>
             <h3>Languages & Environment</h3>
           </div>
-          <div class="skill-chips-grid">
-            <span class="skill-chip"><span class="chip-dot"></span>Python</span>
-            <span class="skill-chip"><span class="chip-dot"></span>C</span>
-            <span class="skill-chip"><span class="chip-dot"></span>SQL</span>
-            <span class="skill-chip"><span class="chip-dot"></span>HTML5 / CSS3</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Git / GitHub</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Linux / Bash</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Streamlit</span>
-            <span class="skill-chip"><span class="chip-dot"></span>Vercel</span>
+          <div class="skill-chips">
+            <span class="skill-chip"><span class="dot"></span>Python</span>
+            <span class="skill-chip"><span class="dot"></span>C</span>
+            <span class="skill-chip"><span class="dot"></span>SQL</span>
+            <span class="skill-chip"><span class="dot"></span>HTML5 / CSS3</span>
+            <span class="skill-chip"><span class="dot"></span>Git / GitHub</span>
+            <span class="skill-chip"><span class="dot"></span>Linux / Bash</span>
+            <span class="skill-chip"><span class="dot"></span>Streamlit</span>
+            <span class="skill-chip"><span class="dot"></span>Vercel</span>
           </div>
         </div>
-
       </div>
     </section>
 
     <div class="rule"></div>
 
-    <!-- Redesigned Minimalist Contact Section (Clean, Understated & Zero Cringe) -->
-    <section id="contact" class="section contact reveal-on-scroll">
-      <div class="contact-card-wrap">
-        <div class="contact-header-block">
-          <h2 class="section-title">contact</h2>
-          <p class="contact-subtext">
-            Open to internships, research collaborations, or discussing engineering problems in data science and machine learning.
-          </p>
-        </div>
+    <!-- Notes -->
+    <section id="notes" class="section reveal-on-scroll">
+      <h2>Notes</h2>
 
-        <!-- Sleek, compact, perfectly-proportioned contact capsule -->
+      <div class="notes-grid">
+        <a class="note-card" href="https://github.com/thekarak/Analyticus" target="_blank" rel="noopener">
+          <span class="note-meta">note · 05 min · validation</span>
+          <h3>Leakage-free grouped CV, the hard way</h3>
+          <p>Why fold-only-fit preprocessing and zero athlete overlap mattered more than the ensemble itself — and how a 0.12 threshold beat 0.5.</p>
+          <span class="note-cta">read the code ↗</span>
+        </a>
+        <a class="note-card" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">
+          <span class="note-meta">note · 04 min · rag</span>
+          <h3>When RAG doesn't save you</h3>
+          <p>Retrieval noise just moves the hallucination somewhere subtler. Notes on isolating benchmarks where context actually helps.</p>
+          <span class="note-cta">read the code ↗</span>
+        </a>
+        <a class="note-card" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">
+          <span class="note-meta">note · 03 min · shipping</span>
+          <h3>Strict JSON schemas for LLM output</h3>
+          <p>How forcing deterministic scoring schemas tamed heterogeneous resumes — and made streaming deploys on Vercel painless.</p>
+          <span class="note-cta">read the code ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <!-- Contact -->
+    <section id="contact" class="section reveal-on-scroll">
+      <h2>Contact</h2>
+      <div class="contact-wrap">
+        <p class="contact-sub">
+          Open to internships, research collaborations, or discussing engineering problems in data science and machine learning.
+        </p>
         <div class="contact-bar">
-          <a href="mailto:soykarak@gmail.com" class="contact-pill-link" title="Send email to soykarak@gmail.com">
-            <svg class="contact-mail-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-            <span class="contact-mail-address">soykarak@gmail.com</span>
+          <a href="mailto:soykarak@gmail.com" title="Send email to soykarak@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <span>soykarak@gmail.com</span>
           </a>
-
-          <div class="contact-bar-divider"></div>
-
-          <button class="contact-copy-action copy-trigger" data-copy="soykarak@gmail.com" aria-label="Copy email address">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <div class="divider"></div>
+          <button class="copy-trigger" data-copy="soykarak@gmail.com" aria-label="Copy email address">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             <span class="copy-label">copy</span>
           </button>
         </div>
@@ -298,48 +390,58 @@
 
   </main>
 
-  <!-- Resume Preview Modal -->
+  <!-- Giant footer name -->
+  <div class="giant-wrap reveal-on-scroll" aria-hidden="true">
+    <div class="giant-dots"></div>
+    <div class="giant-name">
+      <span class="giant-line">SOURASIS</span>
+      <span class="giant-line">KARAK</span>
+    </div>
+    <p class="giant-sub">ml · data science · predictive modeling</p>
+  </div>
+
+  <!-- Resume Modal -->
   <div id="resume-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-card">
       <div class="modal-header">
         <div>
           <h3 id="modal-title">Sourasis Karak — Resume</h3>
-          <span class="modal-subtitle">Computer Science Undergrad · ML & Data Science</span>
+          <span class="modal-sub">Computer Science Undergrad · ML & Data Science</span>
         </div>
-        <div class="modal-controls">
-          <a href="assets/resume.pdf" download="Sourasis_Karak_Resume.pdf" class="btn btn-sm btn-primary">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <div style="display:flex;gap:0.5rem;align-items:center">
+          <a href="assets/resume.pdf" download="Sourasis_Karak_Resume.pdf" class="cv-btn" style="font-size:12px;padding:0.375rem 0.75rem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             Download PDF
           </a>
-          <button id="close-modal-btn" class="modal-close" aria-label="Close modal">✕</button>
+          <button id="close-modal-btn" class="modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
       </div>
       <div class="modal-body">
-        <img src="assets/resume.png" alt="Sourasis Karak Resume Preview" class="resume-img-preview" />
+        <img src="assets/resume.png" alt="Sourasis Karak Resume Preview" />
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification for Copy feedback -->
+  <!-- Toast -->
   <div id="toast" class="toast" aria-live="polite" aria-hidden="true">
     <span id="toast-text">Email copied to clipboard! ✓</span>
   </div>
 
-  <!-- Footer with JIS College of Engineering & Unique Browser Views Counter -->
-  <footer class="footer">
+  <!-- Footer -->
+  <footer class="footer container">
     <div class="footer-left">
-      <span>© 2026 Sourasis Karak</span>
-      <span class="footer-sep">·</span>
-      <span class="footer-college">JIS College of Engineering</span>
+      <span class="college">JIS College of Engineering</span>
+      <span>© <span id="year">2026</span> Sourasis Karak</span>
     </div>
-
     <div class="footer-right">
       <div class="views-pill" title="Unique browser and device view counter">
-        <span class="views-pulse" aria-hidden="true"></span>
-        <span class="views-label">views :</span>
-        <span id="views-count" class="views-count">—</span>
+        <span class="pulse" aria-hidden="true"></span>
+        <span>views :</span>
+        <span id="views-count" class="count">—</span>
       </div>
-      <span class="footer-sub">craft & code</span>
+      <button id="back-to-top" class="to-top" aria-label="Back to top">↑ top</button>
     </div>
   </footer>
 
