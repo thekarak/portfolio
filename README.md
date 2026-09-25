@@ -9,10 +9,10 @@ Live at: [https://thekarak.github.io](https://thekarak.github.io) (or your custo
 ## ✨ Features Added
 
 - **Accurate Profile & Hackathon Achievements**:
-  - **Analyticus**: Team Leader | IIT Guwahati PlayHack ML Track (Out-of-fold F1: 0.9995).
+  - **Analyticus**: Team Leader | IIT Guwahati PlayHack ML Track; leakage-free validation and calibrated injury-risk modeling.
   - **VARUNA**: Smart India Hackathon 2026 (ESRGAN + U-Net + FastAPI + Redis).
   - **RoastMeBuddy**: Solo Developer | Production LLM application ([roastmebuddy.vercel.app](https://roastmebuddy.vercel.app)).
-  - **Reducing LLM Hallucinations**: Empirical RAG research.
+  - **TruthScope (Reducing LLM Hallucinations)**: Evidence-first RAG evaluation app with a 60-question benchmark across 51 space-mission documents; the committed local simulator reports hallucination reducing from 96.7% to 6.7%.
 - **Interactive Resume**:
   - In-browser **Resume Preview Modal** (accessible via Topbar or Hero).
   - Direct **PDF Download** button linked to high-res `assets/resume.pdf`.

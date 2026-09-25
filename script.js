@@ -1,43 +1,75 @@
 (function () {
   /* ============ Boot loader ============ */
   var bootLoader = document.getElementById("boot-loader");
-  var bootFill = document.getElementById("boot-fill");
-  var bootPct = document.getElementById("boot-pct");
-  var booted = false;
+  var mainElem = document.getElementById("top");
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var bootRafs = [];
+  var bootTimers = [];
+  var bootTagline = document.querySelector(".boot-tagline");
+
+  function scrambleTo(elem, word, delay) {
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var resolved = 0;
+    var start = null;
+    var total = 900;
+    function frame(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / total, 1);
+      var out = "";
+      for (var i = 0; i < word.length; i++) {
+        if (i < resolved || p === 1) {
+          out += word[i];
+        } else {
+          out += chars[(Math.random() * chars.length) | 0];
+        }
+      }
+      elem.textContent = out;
+      resolved = Math.floor(p * word.length * 0.7);
+      if (p < 1) bootRafs.push(requestAnimationFrame(frame));
+      else elem.textContent = word;
+    }
+    bootTimers.push(setTimeout(function () {
+      elem.classList.add("is-visible");
+      elem.textContent = "";
+      bootRafs.push(requestAnimationFrame(frame));
+    }, delay));
+  }
 
   function finishBoot() {
-    if (booted) return;
-    booted = true;
-    if (bootFill) bootFill.style.width = "100%";
-    if (bootPct) bootPct.textContent = "100%";
-    setTimeout(function () {
-      if (bootLoader) bootLoader.classList.add("done");
-      document.body.classList.add("is-booted");
-      document.body.style.overflow = "";
-    }, 180);
+    if (!bootLoader || bootTimers === "done") return;
+    bootRafs.forEach(cancelAnimationFrame);
+    bootTimers.forEach(clearTimeout);
+    bootRafs = "done";
+    bootTimers = "done";
+    bootLoader.classList.add("done");
+    bootLoader.setAttribute("aria-hidden", "true");
+    document.body.classList.add("is-booted");
+    document.body.classList.remove("is-loading");
+    document.body.style.overflow = "";
+    if (mainElem) mainElem.removeAttribute("inert");
   }
 
   if (bootLoader) {
+    if (mainElem) mainElem.setAttribute("inert", "");
     document.body.style.overflow = "hidden";
-    var reduceMotion = window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.body.classList.add("is-loading");
     if (reduceMotion) {
-      finishBoot();
+      bootLoader.classList.add("done");
+      bootLoader.setAttribute("aria-hidden", "true");
+      document.body.classList.add("is-booted");
+      document.body.classList.remove("is-loading");
+      document.body.style.overflow = "";
+      if (mainElem) mainElem.removeAttribute("inert");
     } else {
-      var bootStart = null, bootDur = 1400;
-      function bootStep(ts) {
-        if (booted) return;
-        if (!bootStart) bootStart = ts;
-        var p = Math.min((ts - bootStart) / bootDur, 1);
-        var eased = p < 0.7 ? p * 1.1 : 0.77 + (p - 0.7) * 0.77;
-        var pct = Math.min(Math.floor(eased * 100), 99);
-        if (bootFill) bootFill.style.width = pct + "%";
-        if (bootPct) bootPct.textContent = (pct < 10 ? "0" : "") + pct + "%";
-        if (p < 1) requestAnimationFrame(bootStep);
-        else finishBoot();
-      }
-      requestAnimationFrame(bootStep);
-      setTimeout(finishBoot, 3500);
+      var words = bootLoader.querySelectorAll(".boot-word");
+      words.forEach(function (el, i) {
+        scrambleTo(el, el.getAttribute("data-word") || el.textContent, i * 100);
+      });
+      bootTimers.push(setTimeout(function () {
+        if (bootTagline) bootTagline.classList.add("is-visible");
+      }, 600));
+      bootTimers.push(setTimeout(finishBoot, 2200));
       bootLoader.addEventListener("click", finishBoot);
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape" || e.key === "Enter") finishBoot();
@@ -92,6 +124,7 @@
   function closeMenu() {
     if (!mobileMenu) return;
     mobileMenu.style.display = "none";
+    mobileMenu.setAttribute("aria-hidden", "true");
     if (menuToggle) menuToggle.setAttribute("aria-expanded", "false");
   }
 
@@ -100,10 +133,21 @@
     menuToggle.addEventListener("click", function () {
       var isOpen = mobileMenu.style.display === "flex";
       mobileMenu.style.display = isOpen ? "none" : "flex";
+      mobileMenu.setAttribute("aria-hidden", isOpen ? "true" : "false");
       menuToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
     });
     mobileMenu.querySelectorAll("a, button").forEach(function (el) {
       el.addEventListener("click", closeMenu);
+    });
+    document.addEventListener("keydown", function (e) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "j") {
+        e.preventDefault();
+        menuToggle.click();
+      }
+      if (e.key === "Escape" && mobileMenu.style.display === "flex") closeMenu();
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 760) closeMenu();
     });
   }
 
@@ -116,16 +160,137 @@
       var f = this.getAttribute("data-skill-filter");
       skillTabs.forEach(function (t) {
         t.classList.remove("active");
-        t.setAttribute("aria-selected", "false");
+        t.setAttribute("aria-pressed", "false");
       });
       this.classList.add("active");
-      this.setAttribute("aria-selected", "true");
+      this.setAttribute("aria-pressed", "true");
       skillCats.forEach(function (cat) {
         var show = f === "all" || cat.getAttribute("data-skill") === f;
         cat.classList.toggle("hidden", !show);
       });
+      updateSkillsCount();
     });
   });
+
+  var skillsCountElem = document.getElementById("skills-count");
+  function updateSkillsCount() {
+    if (!skillsCountElem) return;
+    var visible = document.querySelectorAll(
+      ".skill-category:not(.hidden) .skill-chip"
+    );
+    skillsCountElem.textContent = visible.length;
+  }
+  updateSkillsCount();
+
+  /* ============ Project Filtering ============ */
+  var projectTabs = document.querySelectorAll("[data-project-filter]");
+  var projectCards = document.querySelectorAll(".project-card");
+
+  projectTabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      var f = this.getAttribute("data-project-filter");
+      projectTabs.forEach(function (t) {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+      });
+      this.classList.add("active");
+      this.setAttribute("aria-selected", "true");
+      projectCards.forEach(function (card) {
+        var cats = (card.getAttribute("data-category") || "").split(" ");
+        var show = f === "all" || cats.indexOf(f) !== -1;
+        card.classList.toggle("hidden", !show);
+      });
+    });
+  });
+
+  var systemTabs = document.querySelectorAll("[data-system]");
+  var systemPanel = document.getElementById("system-panel");
+  var systemMode = document.getElementById("system-mode");
+  var systemTitle = document.getElementById("system-title");
+  var systemDescription = document.getElementById("system-description");
+  var systemLink = document.getElementById("system-link");
+  var systemNote = document.getElementById("system-note");
+  var systemFlowNodes = document.querySelectorAll(".flow-node");
+  var systemData = {
+    validation: {
+      accent: "#6366f1",
+      mode: "failure mode / validation",
+      title: "Make the split honest.",
+      description: "When a model is allowed to see the same athlete twice, it learns the shortcut instead of the pattern. I keep the boundary visible and the preprocessing honest.",
+      href: "https://github.com/thekarak/Analyticus",
+      note: "the boundary is part of the model",
+      flow: ["raw signals", "grouped split", "calibrated decision"]
+    },
+    evidence: {
+      accent: "#a855f7",
+      mode: "failure mode / evidence",
+      title: "Make every claim traceable.",
+      description: "Retrieval can add context without adding truth. TruthScope breaks an answer into claims and shows the evidence—or the refusal.",
+      href: "https://github.com/thekarak/Reducing-LLM-Hallucinations",
+      note: "context is not the same as evidence",
+      flow: ["retrieved chunks", "claim check", "verdict"]
+    },
+    structure: {
+      accent: "#ec4899",
+      mode: "failure mode / structure",
+      title: "Make messy input usable.",
+      description: "A schema should create clarity, not erase the person behind the input. RoastMeBuddy is an experiment in structured feedback that still feels specific.",
+      href: "https://github.com/thekarak/RoastMeBuddy",
+      note: "structure should preserve nuance",
+      flow: ["messy input", "strict schema", "useful critique"]
+    },
+    signal: {
+      accent: "#0ea5e9",
+      mode: "failure mode / signal",
+      title: "Make weak pixels useful.",
+      description: "Satellite imagery rarely arrives clean. VARUNA explores how much structure can be recovered before enhancement starts inventing detail.",
+      href: "https://github.com/thekarak",
+      note: "recover signal without inventing detail",
+      flow: ["low-res tile", "super-resolution", "flood map"]
+    }
+  };
+
+  function selectSystem(key) {
+    var item = systemData[key];
+    if (!item || !systemPanel) return;
+    systemTabs.forEach(function (tab) {
+      var active = tab.getAttribute("data-system") === key;
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+      tab.setAttribute("tabindex", active ? "0" : "-1");
+      if (active) {
+        tab.id = "system-tab-" + key;
+        systemPanel.setAttribute("aria-labelledby", tab.id);
+      }
+    });
+    systemPanel.style.setProperty("--system-accent", item.accent);
+    if (systemMode) systemMode.textContent = item.mode;
+    if (systemTitle) systemTitle.textContent = item.title;
+    if (systemDescription) systemDescription.textContent = item.description;
+    if (systemLink) systemLink.href = item.href;
+    if (systemNote) systemNote.textContent = item.note;
+    systemFlowNodes.forEach(function (node, index) {
+      if (item.flow[index]) node.textContent = item.flow[index];
+    });
+  }
+
+  systemTabs.forEach(function (tab, index) {
+    tab.addEventListener("click", function () {
+      selectSystem(this.getAttribute("data-system"));
+    });
+    tab.addEventListener("keydown", function (event) {
+      var nextIndex = index;
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") nextIndex = (index + 1) % systemTabs.length;
+      else if (event.key === "ArrowUp" || event.key === "ArrowLeft") nextIndex = (index - 1 + systemTabs.length) % systemTabs.length;
+      else if (event.key === "Home") nextIndex = 0;
+      else if (event.key === "End") nextIndex = systemTabs.length - 1;
+      else return;
+      event.preventDefault();
+      systemTabs[nextIndex].focus();
+      selectSystem(systemTabs[nextIndex].getAttribute("data-system"));
+    });
+  });
+  if (systemTabs.length) selectSystem("validation");
 
   /* ============ Scroll Reveal ============ */
   if ("IntersectionObserver" in window) {
@@ -215,6 +380,12 @@
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    modalFocusBefore = document.activeElement;
+    var focusable = modal.querySelectorAll(
+      "a[href], button:not([disabled]), textarea, input, select"
+    );
+    modalFocusFirst = focusable.length ? focusable[0] : modal;
+    if (modalFocusFirst) modalFocusFirst.focus();
   }
 
   function closeModal() {
@@ -222,7 +393,12 @@
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    if (modalFocusBefore && modalFocusBefore.focus) modalFocusBefore.focus();
+    modalFocusBefore = null;
   }
+
+  var modalFocusBefore = null;
+  var modalFocusFirst = null;
 
   if (openResumeBtn) openResumeBtn.addEventListener("click", openModal);
   if (mobileResumeBtn) mobileResumeBtn.addEventListener("click", function () { closeMenu(); openModal(); });
@@ -231,6 +407,22 @@
   if (modal) {
     modal.addEventListener("click", function (event) {
       if (event.target === modal) closeModal();
+    });
+    modal.addEventListener("keydown", function (event) {
+      if (event.key !== "Tab") return;
+      var focusable = modal.querySelectorAll(
+        "a[href], button:not([disabled]), textarea, input, select"
+      );
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
   }
 
@@ -335,38 +527,9 @@
     });
   }
 
-  /* ============ Stats count-up ============ */
-  var statNums = document.querySelectorAll(".stat-num");
-  function animateStat(elem) {
-    var target = parseFloat(elem.getAttribute("data-count") || "0");
-    var decimals = parseInt(elem.getAttribute("data-decimals") || "0", 10);
-    var suffix = elem.getAttribute("data-suffix") || "";
-    var dur = 1100, start = null;
-    function step(ts) {
-      if (!start) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      var ease = 1 - Math.pow(1 - p, 3);
-      elem.textContent = (target * ease).toFixed(decimals) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-      else elem.textContent = target.toFixed(decimals) + suffix;
-    }
-    requestAnimationFrame(step);
-  }
-  if ("IntersectionObserver" in window && statNums.length) {
-    var statObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          animateStat(en.target);
-          statObs.unobserve(en.target);
-        }
-      });
-    }, { threshold: 0.4 });
-    statNums.forEach(function (el) { statObs.observe(el); });
-  }
-
   /* ============ Active nav highlight ============ */
   var navLinks = document.querySelectorAll(".topbar a[href^='#']");
-  var sections = ["work", "journey", "skills", "notes", "contact"]
+  var sections = ["about", "work", "journey", "skills", "notes", "contact"]
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean);
 

@@ -7,20 +7,20 @@
   <meta name="description" content="Sourasis Karak — 2nd year CS undergrad at JIS College of Engineering focused on Machine Learning, Data Science, predictive modeling, and resilient systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-theme="light">
 
   <!-- Boot loader -->
   <div id="boot-loader" class="boot-loader" role="status" aria-label="Loading portfolio">
-    <div class="boot-content">
-      <div class="boot-monogram" aria-hidden="true">
-        <span class="first">S</span><span class="last">K</span>
+    <div class="boot-grid" aria-hidden="true"></div>
+    <div class="boot-inner" aria-hidden="true">
+      <div class="boot-row">
+        <span class="boot-word" data-word="SOURASIS">SOURASIS</span>
+        <span class="boot-word" data-word="KARAK">KARAK</span>
       </div>
-      <p class="boot-sub">sourasis karak</p>
-      <div class="boot-bar-wrap" aria-hidden="true"><span id="boot-fill" class="boot-bar-fill"></span></div>
-      <div class="boot-bottom"><span id="boot-pct">00%</span><span>click to skip</span></div>
+      <p class="boot-tagline">machine learning · data science · predictive modeling</p>
     </div>
   </div>
 
@@ -30,6 +30,14 @@
   <!-- Topbar -->
   <header class="topbar">
     <a href="#top" class="mark" title="Back to top">SK</a>
+    <a href="#top" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"></path><path d="v10a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-7"></path><path d="M5 12v8h14v-8"></path><path d="M9 20v-6h6v6"></path></svg>
+      <span>home</span>
+    </a>
+    <a href="#about">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+      <span>about</span>
+    </a>
     <a href="#work">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
       <span>work</span>
@@ -64,8 +72,10 @@
   </header>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="mobile-menu">
-    <a href="#work">work</a>
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <span class="mobile-menu-label">navigate</span>
+    <a href="#top">home</a>
+    <a href="#about">about</a>
     <a href="#journey">journey</a>
     <a href="#skills">skills</a>
     <a href="#notes">notes</a>
@@ -119,25 +129,65 @@
       </button>
     </section>
 
-    <!-- Stats -->
-    <dl class="stats-band reveal-on-scroll">
-      <div class="stat">
-        <dt>best OOF F1</dt>
-        <dd><span class="stat-num" data-count="0.9995" data-decimals="4">0.0000</span></dd>
+    <section id="systems" class="section systems-section reveal-on-scroll">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">systems, not just notebooks</span>
+          <h2>From failure mode to system</h2>
+        </div>
+        <p class="section-intro">A small map of the problems I keep coming back to.</p>
       </div>
-      <div class="stat">
-        <dt>recall</dt>
-        <dd><span class="stat-num" data-count="100" data-suffix="%">0%</span></dd>
+
+      <div class="systems-board">
+        <div class="systems-rail" role="tablist" aria-label="Explore project themes">
+          <button class="system-tab active" type="button" data-system="validation" role="tab" aria-selected="true" aria-controls="system-panel">
+            <span class="system-tab-index">01</span>
+            <span class="system-tab-copy"><strong>Leakage</strong><small>validation</small></span>
+            <span class="system-tab-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="system-tab" type="button" data-system="evidence" role="tab" aria-selected="false" aria-controls="system-panel">
+            <span class="system-tab-index">02</span>
+            <span class="system-tab-copy"><strong>Unsupported claims</strong><small>evidence</small></span>
+            <span class="system-tab-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="system-tab" type="button" data-system="structure" role="tab" aria-selected="false" aria-controls="system-panel">
+            <span class="system-tab-index">03</span>
+            <span class="system-tab-copy"><strong>Messy input</strong><small>structure</small></span>
+            <span class="system-tab-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="system-tab" type="button" data-system="signal" role="tab" aria-selected="false" aria-controls="system-panel">
+            <span class="system-tab-index">04</span>
+            <span class="system-tab-copy"><strong>Weak pixels</strong><small>signal</small></span>
+            <span class="system-tab-arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+
+        <div id="system-panel" class="system-panel" role="tabpanel" aria-live="polite">
+          <div class="system-panel-top">
+            <span id="system-mode" class="system-mode">failure mode / validation</span>
+            <span class="system-status"><span class="status-dot" aria-hidden="true"></span> system online</span>
+          </div>
+          <div class="system-panel-body">
+            <div class="system-copy">
+              <h3 id="system-title">Make the split honest.</h3>
+              <p id="system-description">When a model is allowed to see the same athlete twice, it learns the shortcut instead of the pattern. I keep the boundary visible and the preprocessing honest.</p>
+              <a id="system-link" class="system-link" href="https://github.com/thekarak/Analyticus" target="_blank" rel="noopener">open project <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="system-flow" aria-label="System flow">
+              <span class="flow-node">raw signals</span>
+              <span class="flow-connector" aria-hidden="true"></span>
+              <span class="flow-node">grouped split</span>
+              <span class="flow-connector" aria-hidden="true"></span>
+              <span class="flow-node">calibrated decision</span>
+            </div>
+          </div>
+          <div class="system-panel-footer">
+            <span>design note</span>
+            <span id="system-note">the boundary is part of the model</span>
+          </div>
+        </div>
       </div>
-      <div class="stat">
-        <dt>features</dt>
-        <dd><span class="stat-num" data-count="77">0</span></dd>
-      </div>
-      <div class="stat">
-        <dt>shipped</dt>
-        <dd><span class="stat-num" data-count="1">0</span></dd>
-      </div>
-    </dl>
+    </section>
 
     <div class="rule"></div>
 
@@ -145,18 +195,40 @@
     <section id="work" class="section reveal-on-scroll">
       <h2>Featured work</h2>
 
+      <div class="projects-filter" role="tablist" aria-label="Filter projects">
+        <button class="project-tab active" data-project-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="project-tab" data-project-filter="ml" role="tab" aria-selected="false">Machine Learning</button>
+        <button class="project-tab" data-project-filter="cv" role="tab" aria-selected="false">Computer Vision</button>
+        <button class="project-tab" data-project-filter="web" role="tab" aria-selected="false">Web & LLM</button>
+      </div>
+
       <div class="projects-grid">
-        <article class="project-card" data-category="ds-ml">
+        <article class="project-card" data-category="ml">
           <h3>Analyticus</h3>
           <p class="project-subtitle">Data Science · Athlete Injury Risk & Recovery Prediction</p>
           <p class="project-desc">
-            Designed a leakage-free validation pipeline with grouped 5-fold cross-validation and fold-only-fit preprocessing (zero athlete overlap between train and test splits). Engineered a dual-stage ensemble (XGBoost, LightGBM, CatBoost) over 77 biometric and activity features, achieving an out-of-fold <strong>F1-score of 0.9995</strong> and <strong>100% recall</strong> with zero false negatives. Calibrated decision threshold from 0.5 to 0.12 to counter strict competition penalties.
+            Designed a leakage-free validation pipeline with grouped 5-fold cross-validation and fold-only-fit preprocessing, so athlete identities never cross the train/test boundary. Engineered a dual-stage ensemble (XGBoost, LightGBM, CatBoost) across biometric and activity signals, then calibrated the decision threshold to prioritize catching high-risk cases without hiding uncertainty.
           </p>
           <div class="project-badges">
             <span class="badge">Data Science</span><span class="badge">XGBoost</span><span class="badge">LightGBM</span><span class="badge">CatBoost</span><span class="badge">Scikit-Learn</span><span class="badge">Grouped 5-Fold CV</span><span class="badge">Pandas</span>
           </div>
           <div class="project-links">
             <a class="project-link" href="https://github.com/thekarak/Analyticus" target="_blank" rel="noopener">source code ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="cv ml">
+          <h3>VARUNA</h3>
+          <p class="project-subtitle">Computer Vision · Flood Mapping & Damage Assessment — Smart India Hackathon 2026</p>
+          <p class="project-desc">
+            Satellite-image flood segmentation and damage-assessment pipeline combining <strong>ESRGAN super-resolution</strong> with a <strong>U-Net</strong> segmenter,
+            served via <strong>FastAPI</strong> with <strong>Redis</strong> caching for low-latency tile inference. Built for rapid, ward-level flood extent mapping from noisy low-res inputs.
+          </p>
+          <div class="project-badges">
+            <span class="badge">Computer Vision</span><span class="badge">U-Net</span><span class="badge">ESRGAN</span><span class="badge">FastAPI</span><span class="badge">Redis</span><span class="badge">Python</span>
+          </div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/thekarak" target="_blank" rel="noopener">source code ↗</a>
           </div>
         </article>
 
@@ -175,17 +247,17 @@
           </div>
         </article>
 
-        <article class="project-card" data-category="ds-ml research">
-          <h3>Reducing LLM Hallucinations</h3>
-          <p class="project-subtitle">Empirical Evaluation of Retrieval Dynamics</p>
+        <article class="project-card" data-category="ml web">
+          <h3>TruthScope</h3>
+          <p class="project-subtitle">Evidence-first RAG hallucination evaluation</p>
           <p class="project-desc">
-            An empirical investigation on retrieval-augmented generation: isolating benchmarks where RAG genuinely mitigates hallucination versus where contextual noise shifts error modes into subtle retrieval failures.
+            Built an interactive RAG evaluation app with a 60-question benchmark across 51 space-mission documents. Compares baseline, strict Top-3/Top-5, and loose Top-3 retrieval, then checks individual claims against retrieved evidence, flags risky premises, and shows the source chunk. The committed local-simulator benchmark reports hallucination falling from <strong>96.7% to 6.7%</strong>.
           </p>
           <div class="project-badges">
-            <span class="badge">RAG</span><span class="badge">Eval Benchmarks</span><span class="badge">NLP</span><span class="badge">Python</span>
+            <span class="badge">RAG</span><span class="badge">TruthScope</span><span class="badge">Streamlit</span><span class="badge">Sentence Transformers</span><span class="badge">Benchmarking</span><span class="badge">Python</span>
           </div>
           <div class="project-links">
-            <a class="project-link" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">source code ↗</a>
+            <a class="project-link" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">view project ↗</a>
           </div>
         </article>
       </div>
@@ -207,8 +279,22 @@
             <div class="timeline-meta">
               <span class="role">IIT Guwahati PlayHack ML · hackathon</span>
             </div>
-            <p class="timeline-desc">Leading a leakage-free injury-risk pipeline: grouped 5-fold CV, fold-only-fit preprocessing, dual-stage gradient-boosting ensemble over 77 features.</p>
+            <p class="timeline-desc">Leading a leakage-free injury-risk pipeline: grouped 5-fold CV, fold-only-fit preprocessing, and a dual-stage gradient-boosting ensemble across biometric and activity signals.</p>
             <div class="timeline-tags"><span class="badge">XGBoost</span><span class="badge">LightGBM</span><span class="badge">CatBoost</span></div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">VA</div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <h3>Team Member — VARUNA</h3>
+              <span class="timeline-date">2026 — present</span>
+            </div>
+            <div class="timeline-meta">
+              <span class="role">Smart India Hackathon 2026 · computer vision</span>
+            </div>
+            <p class="timeline-desc">Flood mapping pipeline: ESRGAN super-resolution + U-Net segmentation, served with FastAPI and Redis caching for fast tile inference.</p>
+            <div class="timeline-tags"><span class="badge">U-Net</span><span class="badge">ESRGAN</span><span class="badge">FastAPI</span><span class="badge">Redis</span></div>
           </div>
         </li>
         <li class="timeline-item">
@@ -226,17 +312,17 @@
           </div>
         </li>
         <li class="timeline-item">
-          <div class="timeline-icon" aria-hidden="true">RG</div>
+          <div class="timeline-icon" aria-hidden="true">TS</div>
           <div class="timeline-card">
             <div class="timeline-header">
-              <h3>Independent Research — RAG evaluation</h3>
-              <span class="timeline-date">2024 — present</span>
+              <h3>TruthScope — Evidence-first RAG evaluation</h3>
+              <span class="timeline-date">2026 — present</span>
             </div>
             <div class="timeline-meta">
-              <span class="role">self-directed · nlp</span>
+              <span class="role">independent project · nlp / evaluation</span>
             </div>
-            <p class="timeline-desc">Empirical study of where retrieval-augmented generation truly reduces hallucination vs. where retrieval noise shifts failure modes.</p>
-            <div class="timeline-tags"><span class="badge">RAG</span><span class="badge">Eval benchmarks</span><span class="badge">Python</span></div>
+            <p class="timeline-desc">Built a 60-question RAG benchmark across 51 space-mission documents, comparing baseline, strict, and loose retrieval. Added claim-level evidence checking, risk warnings, learning coaching, and an offline deterministic simulator for reproducible demos.</p>
+            <div class="timeline-tags"><span class="badge">TruthScope</span><span class="badge">RAG</span><span class="badge">Streamlit</span><span class="badge">Sentence Transformers</span><span class="badge">Evaluation</span></div>
           </div>
         </li>
         <li class="timeline-item">
@@ -351,10 +437,10 @@
           <span class="note-cta">read the code ↗</span>
         </a>
         <a class="note-card" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">
-          <span class="note-meta">note · 04 min · rag</span>
-          <h3>When RAG doesn't save you</h3>
-          <p>Retrieval noise just moves the hallucination somewhere subtler. Notes on isolating benchmarks where context actually helps.</p>
-          <span class="note-cta">read the code ↗</span>
+          <span class="note-meta">note · rag · evaluation</span>
+          <h3>What RAG gets wrong — and how to inspect it</h3>
+          <p>TruthScope makes failure modes visible: retrieval misses, bad chunk boundaries, entity confusion, prompt weakness, and weak verification. Claim-level verdicts show why an answer should be trusted or questioned.</p>
+          <span class="note-cta">explore TruthScope ↗</span>
         </a>
         <a class="note-card" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">
           <span class="note-meta">note · 03 min · shipping</span>
