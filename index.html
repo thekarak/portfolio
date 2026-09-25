@@ -251,7 +251,7 @@
           <h3>TruthScope</h3>
           <p class="project-subtitle">Evidence-first RAG hallucination evaluation</p>
           <p class="project-desc">
-            Built an interactive RAG evaluation app with a 60-question benchmark across 51 space-mission documents. Compares baseline, strict Top-3/Top-5, and loose Top-3 retrieval, then checks individual claims against retrieved evidence, flags risky premises, and shows the source chunk. The committed local-simulator benchmark reports hallucination falling from <strong>96.7% to 6.7%</strong>.
+            Built an interactive, evidence-first RAG evaluation app with a 60-question benchmark across 51 space-mission documents. Compares baseline, strict Top-3/Top-5, and loose Top-3 retrieval, then splits answers into claims, checks each against retrieved evidence, flags risky premises, and surfaces the source chunk. In the committed deterministic local-simulator run, hallucination falls from <strong>93.3% to 6.7%</strong> and token F1 rises from <strong>0.22 to 0.85</strong>.
           </p>
           <div class="project-badges">
             <span class="badge">RAG</span><span class="badge">TruthScope</span><span class="badge">Streamlit</span><span class="badge">Sentence Transformers</span><span class="badge">Benchmarking</span><span class="badge">Python</span>
@@ -321,7 +321,7 @@
             <div class="timeline-meta">
               <span class="role">independent project · nlp / evaluation</span>
             </div>
-            <p class="timeline-desc">Built a 60-question RAG benchmark across 51 space-mission documents, comparing baseline, strict, and loose retrieval. Added claim-level evidence checking, risk warnings, learning coaching, and an offline deterministic simulator for reproducible demos.</p>
+            <p class="timeline-desc">Built a 60-question RAG benchmark across 51 space-mission documents, comparing baseline, strict, and loose retrieval. Added claim-level evidence checks, a risk radar, learning coaching, multi-provider routing, and regenerated setup, category, ablation, and claim-audit charts from the current results run.</p>
             <div class="timeline-tags"><span class="badge">TruthScope</span><span class="badge">RAG</span><span class="badge">Streamlit</span><span class="badge">Sentence Transformers</span><span class="badge">Evaluation</span></div>
           </div>
         </li>
@@ -439,7 +439,7 @@
         <a class="note-card" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">
           <span class="note-meta">note · rag · evaluation</span>
           <h3>What RAG gets wrong — and how to inspect it</h3>
-          <p>TruthScope makes failure modes visible: retrieval misses, bad chunk boundaries, entity confusion, prompt weakness, and weak verification. Claim-level verdicts show why an answer should be trusted or questioned.</p>
+          <p>TruthScope makes failure modes visible: retrieval misses, bad chunk boundaries, entity confusion, prompt weakness, and weak verification. The current run adds setup, category, Top-K ablation, and claim-audit charts instead of hiding everything behind one aggregate score.</p>
           <span class="note-cta">explore TruthScope ↗</span>
         </a>
         <a class="note-card" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">
