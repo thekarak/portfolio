@@ -217,18 +217,18 @@
           </div>
         </article>
 
-        <article class="project-card" data-category="cv ml">
+        <article class="project-card" data-category="cv ml web">
           <h3>VARUNA</h3>
-          <p class="project-subtitle">Computer Vision · Flood Mapping & Damage Assessment — Smart India Hackathon 2026</p>
+          <p class="project-subtitle">Computer Vision · Maritime oil-spill forensics from Sentinel-1 SAR — Smart India Hackathon 2026</p>
           <p class="project-desc">
-            Satellite-image flood segmentation and damage-assessment pipeline combining <strong>ESRGAN super-resolution</strong> with a <strong>U-Net</strong> segmenter,
-            served via <strong>FastAPI</strong> with <strong>Redis</strong> caching for low-latency tile inference. Built for rapid, ward-level flood extent mapping from noisy low-res inputs.
+            Part of Team CODE_FORUN building an <strong>AI-powered maritime forensic intelligence platform</strong> for oil-spill detection and dark-fleet attribution. A custom 1.17M-parameter CNN with <strong>Grad-CAM</strong> localizes slicks on Sentinel-1 SAR imagery; <strong>U-Net</strong> segmentation, <strong>Bonn Agreement</strong> volume modeling, and a <strong>Lagrangian drift hindcast</strong> reconstruct a probable discharge origin. <strong>PostGIS</strong> then correlates AIS trajectories and blackouts to rank investigative leads, surfaced through a Leaflet/CARTO tactical dashboard and Three.js globe.
           </p>
           <div class="project-badges">
-            <span class="badge">Computer Vision</span><span class="badge">U-Net</span><span class="badge">ESRGAN</span><span class="badge">FastAPI</span><span class="badge">Redis</span><span class="badge">Python</span>
+            <span class="badge">Sentinel-1 SAR</span><span class="badge">Grad-CAM</span><span class="badge">U-Net</span><span class="badge">ESRGAN</span><span class="badge">Lagrangian Drift</span><span class="badge">PostGIS / AIS</span><span class="badge">FastAPI</span><span class="badge">Docker</span>
           </div>
           <div class="project-links">
-            <a class="project-link" href="https://github.com/thekarak" target="_blank" rel="noopener">source code ↗</a>
+            <a class="project-link primary" href="https://varuna-sih.vercel.app/" target="_blank" rel="noopener">live demo ↗</a>
+            <a class="project-link" href="https://github.com/thekarak/VARUNA" target="_blank" rel="noopener">source code ↗</a>
           </div>
         </article>
 
@@ -287,14 +287,14 @@
           <div class="timeline-icon" aria-hidden="true">VA</div>
           <div class="timeline-card">
             <div class="timeline-header">
-              <h3>Team Member — VARUNA</h3>
+              <h3>Backend Architecture & Core ML Pipeline — VARUNA</h3>
               <span class="timeline-date">2026 — present</span>
             </div>
             <div class="timeline-meta">
-              <span class="role">Smart India Hackathon 2026 · computer vision</span>
+              <span class="role">Team CODE_FORUN · Smart India Hackathon 2026</span>
             </div>
-            <p class="timeline-desc">Flood mapping pipeline: ESRGAN super-resolution + U-Net segmentation, served with FastAPI and Redis caching for fast tile inference.</p>
-            <div class="timeline-tags"><span class="badge">U-Net</span><span class="badge">ESRGAN</span><span class="badge">FastAPI</span><span class="badge">Redis</span></div>
+            <p class="timeline-desc">Building a SAR-based maritime forensics pipeline: custom CNN + Grad-CAM localization, U-Net slick segmentation, Bonn volume estimation, Lagrangian drift hindcasting, and PostGIS AIS attribution for dark-fleet investigation.</p>
+            <div class="timeline-tags"><span class="badge">PyTorch</span><span class="badge">Grad-CAM</span><span class="badge">FastAPI</span><span class="badge">PostGIS</span><span class="badge">Celery / Redis</span></div>
           </div>
         </li>
         <li class="timeline-item">

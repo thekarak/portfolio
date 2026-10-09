@@ -243,10 +243,10 @@
       accent: "#0ea5e9",
       mode: "failure mode / signal",
       title: "Make weak pixels useful.",
-      description: "Satellite imagery rarely arrives clean. VARUNA explores how much structure can be recovered before enhancement starts inventing detail.",
-      href: "https://github.com/thekarak",
+      description: "VARUNA turns Sentinel-1 SAR tiles into an investigative lead: detect the slick, reconstruct where it drifted from, then correlate the window with AIS telemetry.",
+      href: "https://github.com/thekarak/VARUNA",
       note: "recover signal without inventing detail",
-      flow: ["low-res tile", "super-resolution", "flood map"]
+      flow: ["SAR tile", "slick + drift", "AIS lead"]
     }
   };
 
