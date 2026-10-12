@@ -203,94 +203,18 @@
     });
   });
 
-  var systemTabs = document.querySelectorAll("[data-system]");
-  var systemPanel = document.getElementById("system-panel");
-  var systemMode = document.getElementById("system-mode");
-  var systemTitle = document.getElementById("system-title");
-  var systemDescription = document.getElementById("system-description");
-  var systemLink = document.getElementById("system-link");
-  var systemNote = document.getElementById("system-note");
-  var systemFlowNodes = document.querySelectorAll(".flow-node");
-  var systemData = {
-    validation: {
-      accent: "#6366f1",
-      mode: "failure mode / validation",
-      title: "Make the split honest.",
-      description: "When a model is allowed to see the same athlete twice, it learns the shortcut instead of the pattern. I keep the boundary visible and the preprocessing honest.",
-      href: "https://github.com/thekarak/Analyticus",
-      note: "the boundary is part of the model",
-      flow: ["raw signals", "grouped split", "calibrated decision"]
-    },
-    evidence: {
-      accent: "#a855f7",
-      mode: "failure mode / evidence",
-      title: "Make every claim traceable.",
-      description: "Retrieval can add context without adding truth. TruthScope breaks an answer into claims and shows the evidence—or the refusal.",
-      href: "https://github.com/thekarak/Reducing-LLM-Hallucinations",
-      note: "context is not the same as evidence",
-      flow: ["retrieved chunks", "claim check", "verdict"]
-    },
-    structure: {
-      accent: "#ec4899",
-      mode: "failure mode / structure",
-      title: "Make messy input usable.",
-      description: "A schema should create clarity, not erase the person behind the input. RoastMeBuddy is an experiment in structured feedback that still feels specific.",
-      href: "https://github.com/thekarak/RoastMeBuddy",
-      note: "structure should preserve nuance",
-      flow: ["messy input", "strict schema", "useful critique"]
-    },
-    signal: {
-      accent: "#0ea5e9",
-      mode: "failure mode / signal",
-      title: "Make weak pixels useful.",
-      description: "VARUNA turns Sentinel-1 SAR tiles into an investigative lead: detect the slick, reconstruct where it drifted from, then correlate the window with AIS telemetry.",
-      href: "https://github.com/thekarak/VARUNA",
-      note: "recover signal without inventing detail",
-      flow: ["SAR tile", "slick + drift", "AIS lead"]
-    }
-  };
+  var upcomingToggle = document.getElementById("upcoming-toggle");
+  var upcomingCard = document.querySelector(".upcoming-card");
+  var upcomingDetail = document.getElementById("upcoming-detail");
 
-  function selectSystem(key) {
-    var item = systemData[key];
-    if (!item || !systemPanel) return;
-    systemTabs.forEach(function (tab) {
-      var active = tab.getAttribute("data-system") === key;
-      tab.classList.toggle("active", active);
-      tab.setAttribute("aria-selected", active ? "true" : "false");
-      tab.setAttribute("tabindex", active ? "0" : "-1");
-      if (active) {
-        tab.id = "system-tab-" + key;
-        systemPanel.setAttribute("aria-labelledby", tab.id);
-      }
-    });
-    systemPanel.style.setProperty("--system-accent", item.accent);
-    if (systemMode) systemMode.textContent = item.mode;
-    if (systemTitle) systemTitle.textContent = item.title;
-    if (systemDescription) systemDescription.textContent = item.description;
-    if (systemLink) systemLink.href = item.href;
-    if (systemNote) systemNote.textContent = item.note;
-    systemFlowNodes.forEach(function (node, index) {
-      if (item.flow[index]) node.textContent = item.flow[index];
+  if (upcomingToggle && upcomingCard && upcomingDetail) {
+    upcomingToggle.addEventListener("click", function () {
+      var open = upcomingToggle.getAttribute("aria-checked") === "true";
+      upcomingToggle.setAttribute("aria-checked", open ? "false" : "true");
+      upcomingCard.classList.toggle("is-open", !open);
+      upcomingDetail.setAttribute("aria-hidden", open ? "true" : "false");
     });
   }
-
-  systemTabs.forEach(function (tab, index) {
-    tab.addEventListener("click", function () {
-      selectSystem(this.getAttribute("data-system"));
-    });
-    tab.addEventListener("keydown", function (event) {
-      var nextIndex = index;
-      if (event.key === "ArrowDown" || event.key === "ArrowRight") nextIndex = (index + 1) % systemTabs.length;
-      else if (event.key === "ArrowUp" || event.key === "ArrowLeft") nextIndex = (index - 1 + systemTabs.length) % systemTabs.length;
-      else if (event.key === "Home") nextIndex = 0;
-      else if (event.key === "End") nextIndex = systemTabs.length - 1;
-      else return;
-      event.preventDefault();
-      systemTabs[nextIndex].focus();
-      selectSystem(systemTabs[nextIndex].getAttribute("data-system"));
-    });
-  });
-  if (systemTabs.length) selectSystem("validation");
 
   /* ============ Scroll Reveal ============ */
   if ("IntersectionObserver" in window) {

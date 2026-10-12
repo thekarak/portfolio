@@ -129,61 +129,56 @@
       </button>
     </section>
 
-    <section id="systems" class="section systems-section reveal-on-scroll">
+    <section id="upcoming" class="section upcoming-section reveal-on-scroll">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">systems, not just notebooks</span>
-          <h2>From failure mode to system</h2>
+          <span class="section-kicker">in the pipeline</span>
+          <h2>Upcoming projects</h2>
         </div>
-        <p class="section-intro">A small map of the problems I keep coming back to.</p>
+        <p class="section-intro">Work that is taking shape before it ships.</p>
       </div>
 
-      <div class="systems-board">
-        <div class="systems-rail" role="tablist" aria-label="Explore project themes">
-          <button class="system-tab active" type="button" data-system="validation" role="tab" aria-selected="true" aria-controls="system-panel">
-            <span class="system-tab-index">01</span>
-            <span class="system-tab-copy"><strong>Leakage</strong><small>validation</small></span>
-            <span class="system-tab-arrow" aria-hidden="true">↗</span>
-          </button>
-          <button class="system-tab" type="button" data-system="evidence" role="tab" aria-selected="false" aria-controls="system-panel">
-            <span class="system-tab-index">02</span>
-            <span class="system-tab-copy"><strong>Unsupported claims</strong><small>evidence</small></span>
-            <span class="system-tab-arrow" aria-hidden="true">↗</span>
-          </button>
-          <button class="system-tab" type="button" data-system="structure" role="tab" aria-selected="false" aria-controls="system-panel">
-            <span class="system-tab-index">03</span>
-            <span class="system-tab-copy"><strong>Messy input</strong><small>structure</small></span>
-            <span class="system-tab-arrow" aria-hidden="true">↗</span>
-          </button>
-          <button class="system-tab" type="button" data-system="signal" role="tab" aria-selected="false" aria-controls="system-panel">
-            <span class="system-tab-index">04</span>
-            <span class="system-tab-copy"><strong>Weak pixels</strong><small>signal</small></span>
-            <span class="system-tab-arrow" aria-hidden="true">↗</span>
-          </button>
+      <div class="upcoming-board">
+        <div class="upcoming-rail">
+          <span class="upcoming-index">01</span>
+          <span class="upcoming-rail-label">next build</span>
+          <span class="upcoming-rail-status"><span class="upcoming-dot" aria-hidden="true"></span> in progress</span>
         </div>
 
-        <div id="system-panel" class="system-panel" role="tabpanel" aria-live="polite">
-          <div class="system-panel-top">
-            <span id="system-mode" class="system-mode">failure mode / validation</span>
-            <span class="system-status"><span class="status-dot" aria-hidden="true"></span> system online</span>
-          </div>
-          <div class="system-panel-body">
-            <div class="system-copy">
-              <h3 id="system-title">Make the split honest.</h3>
-              <p id="system-description">When a model is allowed to see the same athlete twice, it learns the shortcut instead of the pattern. I keep the boundary visible and the preprocessing honest.</p>
-              <a id="system-link" class="system-link" href="https://github.com/thekarak/Analyticus" target="_blank" rel="noopener">open project <span aria-hidden="true">↗</span></a>
+        <div class="upcoming-card">
+          <div class="upcoming-card-head">
+            <div>
+              <span class="upcoming-label">spatial biology · evidence-aware AI</span>
+              <h3>BioAgent-ST</h3>
             </div>
-            <div class="system-flow" aria-label="System flow">
-              <span class="flow-node">raw signals</span>
-              <span class="flow-connector" aria-hidden="true"></span>
-              <span class="flow-node">grouped split</span>
-              <span class="flow-connector" aria-hidden="true"></span>
-              <span class="flow-node">calibrated decision</span>
+            <button id="upcoming-toggle" class="coming-toggle" type="button" role="switch" aria-checked="false" aria-controls="upcoming-detail" aria-label="Show BioAgent-ST build details">
+              <span class="coming-toggle-track" aria-hidden="true"><span class="coming-toggle-knob"></span></span>
+              <span class="coming-toggle-text">coming soon</span>
+            </button>
+          </div>
+
+          <p class="upcoming-description">BioAgent-ST is an evidence-aware AI workflow assistant for spatial transcriptomics. It converts a researcher’s natural-language question into a validated analysis workflow, executes deterministic Scanpy/Squidpy pipelines, and tracks evidence and provenance so results stay reproducible and auditable.</p>
+
+          <div id="upcoming-detail" class="upcoming-detail" aria-hidden="true">
+            <div class="upcoming-detail-grid">
+              <div class="upcoming-detail-item">
+                <span class="upcoming-detail-label">input</span>
+                <strong>natural-language question</strong>
+              </div>
+              <div class="upcoming-detail-item">
+                <span class="upcoming-detail-label">execution</span>
+                <strong>deterministic Scanpy / Squidpy</strong>
+              </div>
+              <div class="upcoming-detail-item">
+                <span class="upcoming-detail-label">trust layer</span>
+                <strong>evidence + provenance per result</strong>
+              </div>
             </div>
           </div>
-          <div class="system-panel-footer">
-            <span>design note</span>
-            <span id="system-note">the boundary is part of the model</span>
+
+          <div class="upcoming-footer">
+            <span>details expand as the workflow settles</span>
+            <span>status · in progress</span>
           </div>
         </div>
       </div>
