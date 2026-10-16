@@ -226,6 +226,49 @@
       </div>
 
       <div class="projects-grid">
+        <article class="project-card" data-category="ml" data-accent="wine">
+          <h3>WineLens <span class="project-flag">new</span></h3>
+          <p class="project-subtitle">Data Science · Wine quality prediction from physicochemical measurements</p>
+          <p class="project-desc">
+            Explored red and white vinho verde samples from the UCI Wine Quality dataset — distributions, correlations, duplicates, outliers, and skewness — then compared regression and classification approaches. A tuned Random Forest Regressor led the regression experiments (MAE <strong>0.414</strong>, RMSE <strong>0.541</strong>, R² <strong>0.553</strong>) against a Linear Regression baseline (MAE 0.504, R² 0.403), while feature-importance and permutation-importance analyses surfaced <strong>alcohol, sulphates, and volatile acidity</strong> as the strongest predictors. A Streamlit app takes all 11 measurements and compares the regressor and classifier outputs side by side.
+          </p>
+          <div class="project-badges">
+            <span class="badge">Python</span><span class="badge">scikit-learn</span><span class="badge">Random Forest</span><span class="badge">EDA</span><span class="badge">Feature Importance</span><span class="badge">Streamlit</span><span class="badge">Pandas</span>
+          </div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/thekarak/Winelens" target="_blank" rel="noopener">source code ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="ml web" data-accent="green">
+          <h3>TruthScope</h3>
+          <p class="project-subtitle">Evidence-first RAG hallucination evaluation</p>
+          <p class="project-desc">
+            Built an interactive, evidence-first RAG evaluation app with a 60-question benchmark across 51 space-mission documents. Compares baseline, strict Top-3/Top-5, and loose Top-3 retrieval, then splits answers into claims, checks each against retrieved evidence, flags risky premises, and surfaces the source chunk. In the committed deterministic local-simulator run, hallucination falls from <strong>93.3% to 6.7%</strong> and token F1 rises from <strong>0.22 to 0.85</strong>.
+          </p>
+          <div class="project-badges">
+            <span class="badge">RAG</span><span class="badge">TruthScope</span><span class="badge">Streamlit</span><span class="badge">Sentence Transformers</span><span class="badge">Benchmarking</span><span class="badge">Python</span>
+          </div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">view project ↗</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="web" data-accent="indigo">
+          <h3>TokenLab</h3>
+          <p class="project-subtitle">LLM tooling · Tokenizer, converter & API cost lab</p>
+          <p class="project-desc">
+            A single-page tokenizer and cost lab that does what OpenAI's tokenizer page does and more: live token splitting across four exact OpenAI encodings (o200k, cl100k, p50k, r50k), a token-ID decoder, a both-way words ⇄ tokens converter, and a cost calculator with monthly and yearly totals. It ships a price table of <strong>61 real models</strong> with per-million-token rates and context windows. The tokenizer is a real byte-level BPE engine, verified <strong>bit-identical to tiktoken</strong> across 20 test cases — no framework, no build step, no backend.
+          </p>
+          <div class="project-badges">
+            <span class="badge">JavaScript</span><span class="badge">Byte-level BPE</span><span class="badge">Tiktoken Parity</span><span class="badge">LLM Pricing</span><span class="badge">No Backend</span><span class="badge">Vercel</span>
+          </div>
+          <div class="project-links">
+            <a class="project-link primary" href="https://tokenlabx.vercel.app" target="_blank" rel="noopener">live demo ↗</a>
+            <a class="project-link" href="https://github.com/thekarak/Tokenlab" target="_blank" rel="noopener">source code ↗</a>
+          </div>
+        </article>
+
         <article class="project-card" data-category="cv ml web" data-accent="teal">
           <h3>VARUNA</h3>
           <p class="project-subtitle">Computer Vision · Maritime oil-spill forensics from Sentinel-1 SAR — Smart India Hackathon 2026</p>
@@ -253,20 +296,6 @@
           <div class="project-links">
             <a class="project-link primary" href="https://roastmebuddy.vercel.app" target="_blank" rel="noopener">live demo ↗</a>
             <a class="project-link" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">source code ↗</a>
-          </div>
-        </article>
-
-        <article class="project-card" data-category="ml web" data-accent="green">
-          <h3>TruthScope</h3>
-          <p class="project-subtitle">Evidence-first RAG hallucination evaluation</p>
-          <p class="project-desc">
-            Built an interactive, evidence-first RAG evaluation app with a 60-question benchmark across 51 space-mission documents. Compares baseline, strict Top-3/Top-5, and loose Top-3 retrieval, then splits answers into claims, checks each against retrieved evidence, flags risky premises, and surfaces the source chunk. In the committed deterministic local-simulator run, hallucination falls from <strong>93.3% to 6.7%</strong> and token F1 rises from <strong>0.22 to 0.85</strong>.
-          </p>
-          <div class="project-badges">
-            <span class="badge">RAG</span><span class="badge">TruthScope</span><span class="badge">Streamlit</span><span class="badge">Sentence Transformers</span><span class="badge">Benchmarking</span><span class="badge">Python</span>
-          </div>
-          <div class="project-links">
-            <a class="project-link" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">view project ↗</a>
           </div>
         </article>
       </div>
