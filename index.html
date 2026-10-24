@@ -83,7 +83,7 @@
 
       <p class="status">
         <span class="pulse" aria-hidden="true"></span>
-        building <strong>BioAgent-ST</strong> &nbsp;·&nbsp; open to internships for fall 2026
+        shipped <strong>BioAgent-ST</strong> (v1.0-paper) &nbsp;·&nbsp; open to internships for fall 2026
         &nbsp;·&nbsp; <span id="local-time" class="clock">--:--:-- IST</span>
       </p>
     </section>
@@ -91,9 +91,7 @@
     <aside class="now reveal">
       <span class="eyebrow">now</span>
       <p>
-        BioAgent-ST is an evidence-aware assistant for spatial transcriptomics: it turns a
-        researcher's question into a validated analysis workflow, runs deterministic
-        Scanpy / Squidpy pipelines, and keeps a provenance trail so results stay auditable.
+        Released <strong>BioAgent-ST</strong> (<a href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">v1.0-paper</a>) with Sourav Sarkar — a verification-first scientific agent for spatial transcriptomics (10x Visium) that couples deterministic Scanpy / Squidpy execution with dual-loop verifier-critic gating and SHA-256 SQLite provenance.
       </p>
     </aside>
 
@@ -106,7 +104,28 @@
       <div class="work-list">
         <article class="work-item">
           <div class="work-head">
-            <h3 class="work-title">WineLens <span class="flag">new</span></h3>
+            <h3 class="work-title">BioAgent-ST <span class="flag">new</span></h3>
+            <span class="work-meta">scientific agents · spatial biology · 2026</span>
+          </div>
+          <p class="work-sub">A verification-first scientific agent for spatial transcriptomics with deterministic execution guarantees.</p>
+          <p class="work-desc">
+            Built with Sourav Sarkar. Replaces unconstrained scientific LLMs with a verified state machine:
+            the LLM is strictly an orchestrator, while all statistical and spatial analyses (QC, Leiden clustering,
+            Moran's <em>I</em>) run deterministically via Scanpy, Squidpy, and SciPy. Features a dual-loop
+            verifier-critic with a 5-state claim rule engine, fail-closed policy gating, 154 unit tests, and
+            an immutable SQLite provenance ledger where every slice and plot is SHA-256 content-hashed.
+          </p>
+          <div class="work-tags">
+            <span class="tag">Python</span><span class="tag">Scanpy</span><span class="tag">Squidpy</span><span class="tag">FastAPI</span><span class="tag">Next.js 16</span><span class="tag">SQLite Ledger</span><span class="tag">Formal Verification</span>
+          </div>
+          <div class="work-links">
+            <a href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">source ↗</a>
+          </div>
+        </article>
+
+        <article class="work-item">
+          <div class="work-head">
+            <h3 class="work-title">WineLens</h3>
             <span class="work-meta">data science · 2026</span>
           </div>
           <p class="work-sub">Predicting wine quality from 11 physicochemical measurements, end to end.</p>
@@ -219,6 +238,14 @@
         <li class="exp-item">
           <span class="exp-when">2026 — now</span>
           <div class="exp-body">
+            <h3>Co-Creator &amp; System Architect <span class="exp-sep">·</span> BioAgent-ST</h3>
+            <p class="exp-org">with Sourav Sarkar · open source (v1.0-paper)</p>
+            <p class="exp-desc">Engineered a verification-first scientific agent for 10x Visium spatial transcriptomics: deterministic Scanpy / Squidpy execution layer, dual-loop verifier-critic, 154 unit tests, and content-addressed SQLite provenance tracking.</p>
+          </div>
+        </li>
+        <li class="exp-item">
+          <span class="exp-when">2026 — now</span>
+          <div class="exp-body">
             <h3>Backend &amp; ML pipeline <span class="exp-sep">·</span> VARUNA</h3>
             <p class="exp-org">Team CODE_FORUN · Smart India Hackathon 2026</p>
             <p class="exp-desc">SAR forensics pipeline: CNN + Grad-CAM localization, U-Net slick segmentation, Lagrangian drift hindcasting and PostGIS AIS attribution.</p>
@@ -269,15 +296,15 @@
 
       <div class="skill-group">
         <h3>Data science &amp; ML</h3>
-        <p>Statistical modeling · Exploratory data analysis · Feature engineering · XGBoost · LightGBM · CatBoost · scikit-learn · Grouped k-fold CV · Pandas · NumPy</p>
+        <p>Statistical modeling · Spatial transcriptomics (Scanpy, Squidpy, AnnData) · Exploratory data analysis · Feature engineering · XGBoost · LightGBM · CatBoost · scikit-learn · Grouped k-fold CV · Pandas · NumPy</p>
       </div>
       <div class="skill-group">
         <h3>Backend &amp; APIs</h3>
-        <p>FastAPI · REST APIs · Microservices · Prompt engineering · LLM APIs &amp; streaming</p>
+        <p>FastAPI · Next.js · SQLite · REST APIs · Microservices · Prompt engineering &amp; verification · LLM APIs &amp; streaming</p>
       </div>
       <div class="skill-group">
         <h3>Languages &amp; tooling</h3>
-        <p>Python · C · SQL · HTML5 / CSS3 · Git / GitHub · Linux / Bash · Streamlit · Vercel</p>
+        <p>Python · TypeScript / JavaScript · C · SQL · Git / GitHub · uv · Docker · Linux / Bash · Streamlit · Vercel</p>
       </div>
     </section>
 
@@ -288,6 +315,12 @@
       </div>
 
       <div class="note-list">
+        <a class="note-item" href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">
+          <span class="note-meta">note · verification · scientific agents</span>
+          <h3>Why scientific agents must be deterministic state machines</h3>
+          <p>Generative models should orchestrate, not synthesize p-values or cluster counts. How we enforced fail-closed policy gates, dual-loop critics, and SHA-256 provenance in BioAgent-ST.</p>
+          <span class="note-cta">explore BioAgent-ST ↗</span>
+        </a>
         <a class="note-item" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">
           <span class="note-meta">note · rag · evaluation</span>
           <h3>What RAG gets wrong — and how to inspect it</h3>
