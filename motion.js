@@ -1,324 +1,219 @@
-/* Minimal theme-aware background motion (Canvas 2D, no dependencies).
-   dark  -> drifting 3D starfield + glowing falling comets
-   light -> floating dust motes + falling ink strokes on paper
-   Respects prefers-reduced-motion and pauses when the tab is hidden. */
-(function () {
-  var canvas = document.getElementById("bg-motion");
-  if (!canvas) return;
-  var ctx = canvas.getContext("2d");
-  if (!ctx) return;
-
-  var reduce = window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  var W = 0, H = 0, DPR = 1, cx = 0, cy = 0;
-  var mode = "dark";
-  var rafId = null;
-  var lastTs = 0;
-  var nextStreakAt = 0;
-
-  var accent = "#b4552e";
-  var inkRGB = "58,54,49";
-  var starRGB = "198,198,192";
-
-  var stars = [];
-  var comets = [];
-  var motes = [];
-  var drops = [];
-  var ripples = [];
-
-  function readTheme() {
-    var cs = getComputedStyle(document.documentElement);
-    accent = (cs.getPropertyValue("--accent") || "#b4552e").trim() || "#b4552e";
-    var next = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-    starRGB = next === "dark" ? "198,198,192" : "52,50,46";
-    inkRGB = next === "dark" ? "198,198,192" : "58,54,49";
-    if (next !== mode) {
-      mode = next;
-      comets = [];
-      drops = [];
-      ripples = [];
-      initParticles();
-    }
-  }
-
-  function hexToRgba(hex, alpha) {
-    hex = hex.replace("#", "");
-    if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    var n = parseInt(hex, 16);
-    if (isNaN(n)) return "rgba(180,85,46," + alpha + ")";
-    return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + alpha + ")";
-  }
-
-  /* ---------- particles ---------- */
-  function makeStar(spread) {
-    return { x: Math.random() * 2 - 1, y: Math.random() * 2 - 1, z: spread ? Math.random() * 0.95 + 0.05 : 1, k: 0.6 + Math.random() * 0.9 };
-  }
-
-  function makeMote() {
-    return {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: 0.8 + Math.random() * 1.6,
-      a: 0.07 + Math.random() * 0.18,
-      vx: (Math.random() - 0.5) * 0.24,
-      vy: -(0.05 + Math.random() * 0.3),
-      sway: 3 + Math.random() * 12,
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.004 + Math.random() * 0.012
-    };
-  }
-
-  function initParticles() {
-    if (mode === "dark") {
-      var target = Math.round(Math.min(300, Math.max(80, (W * H) / 11000)));
-      stars = [];
-      for (var i = 0; i < target; i++) stars.push(makeStar(true));
-    } else {
-      var count = Math.round(Math.min(150, Math.max(50, (W * H) / 16000)));
-      motes = [];
-      for (var j = 0; j < count; j++) motes.push(makeMote());
-    }
-  }
-
-  function resize() {
-    DPR = Math.min(window.devicePixelRatio || 1, 2);
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    cx = W / 2;
-    cy = H / 2;
-    initParticles();
-  }
-
-  /* ---------- dark mode ---------- */
-  function project(s, z) {
-    var zz = Math.max(z, 0.03);
-    return { x: cx + (s.x / zz) * W * 0.45, y: cy + (s.y / zz) * H * 0.45 };
-  }
-
-  function spawnComet() {
-    var dir = Math.random() < 0.5 ? 1 : -1;
-    var ang = Math.PI / 2 + dir * (0.24 + Math.random() * 0.44);
-    var speed = 4.5 + Math.random() * 5;
-    comets.push({
-      x: W * (0.08 + Math.random() * 0.84),
-      y: -90 - Math.random() * 60,
-      vx: Math.cos(ang) * speed,
-      vy: Math.abs(Math.sin(ang)) * speed,
-      len: 130 + Math.random() * 200
+/* Pointer-led orbital study. Real 3D projection, no dependencies. */
+(() => {
+  'use strict';
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const fine = matchMedia('(pointer: fine)');
+  const portrait = document.querySelector('[data-tilt]');
+  let tiltFrame = 0;
+  if (portrait) {
+    portrait.addEventListener('pointermove', event => {
+      if (motion.matches || !fine.matches) return;
+      cancelAnimationFrame(tiltFrame);
+      tiltFrame = requestAnimationFrame(() => {
+        const box = portrait.getBoundingClientRect();
+        portrait.style.setProperty('--ry', `${((event.clientX - box.left) / box.width - .5) * 10}deg`);
+        portrait.style.setProperty('--rx', `${-((event.clientY - box.top) / box.height - .5) * 10}deg`);
+      });
+    }, { passive: true });
+    portrait.addEventListener('pointerleave', () => {
+      cancelAnimationFrame(tiltFrame);
+      portrait.style.setProperty('--ry', '0deg');
+      portrait.style.setProperty('--rx', '0deg');
     });
   }
 
-  function drawStars(step) {
-    for (var i = 0; i < stars.length; i++) {
-      var s = stars[i];
-      var prevZ = s.z;
-      if (step) {
-        s.z -= 0.0021 * s.k * step;
-        if (s.z <= 0.04) { s.x = Math.random() * 2 - 1; s.y = Math.random() * 2 - 1; s.z = 1; prevZ = 1; }
+  const canvas = document.querySelector('#orbit-canvas');
+  const context = canvas?.getContext('2d');
+  const art = canvas?.closest('.orbit-art');
+  if (!context || !art) return;
+  const caption = art.querySelector('.orbit-caption');
+  const readout = art.querySelector('.orbit-readout');
+  const width = 280, height = 230, radius = 65;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  context.scale(dpr, dpr);
+  let ink, line;
+  function palette() {
+    const styles = getComputedStyle(document.documentElement);
+    ink = styles.getPropertyValue('--text').trim();
+    line = styles.getPropertyValue('--strong-line').trim();
+  }
+  palette();
+
+  let frame = 0, last = 0, visible = true;
+  let rotation = .35, yaw = 0, pitch = -.32;
+  let targetYaw = 0, targetPitch = -.32;
+  let velocity = 0, impulse = 0, satelliteAngle = .6;
+  let hovering = false, previousX = null, pointerAt = 0;
+  let pointerX = 0, pointerY = 0, hoverStrength = 0;
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const degrees = radians => {
+    const value = Math.round(radians * 180 / Math.PI);
+    return `${value < 0 ? '−' : '+'}${Math.abs(value).toString().padStart(2, '0')}°`;
+  };
+
+  // All rings, grid lines, and satellites share the same perspective transform.
+  function project(x, y, z) {
+    const a = rotation + yaw;
+    const px = x * Math.cos(a) - z * Math.sin(a);
+    const pz = x * Math.sin(a) + z * Math.cos(a);
+    const py = y * Math.cos(pitch) - pz * Math.sin(pitch);
+    const depth = y * Math.sin(pitch) + pz * Math.cos(pitch);
+    const scale = 400 / (400 + depth);
+    return [width / 2 + px * scale, height / 2 + py * scale, depth];
+  }
+  function orbitPoint(t, tilt) {
+    return [94 * Math.cos(t), 94 * Math.sin(t) * Math.sin(tilt), 94 * Math.sin(t) * Math.cos(tilt)];
+  }
+  // Stroke the near and far segments separately so the sphere reads as a volume.
+  function curve(points, front, alpha, stroke = ink, thickness = .65) {
+    context.beginPath();
+    let drawing = false;
+    points.forEach(point => {
+      const near = point[2] <= 0;
+      if (near !== front) { drawing = false; return; }
+      if (!drawing) context.moveTo(point[0], point[1]);
+      else context.lineTo(point[0], point[1]);
+      drawing = true;
+    });
+    context.strokeStyle = stroke;
+    context.globalAlpha = alpha;
+    context.lineWidth = thickness;
+    context.stroke();
+  }
+  function draw() {
+    context.clearRect(0, 0, width, height);
+    // Tiny registration marks give the object the feel of a working diagram.
+    context.strokeStyle = line;
+    context.lineWidth = .6;
+    context.globalAlpha = .5;
+    [[22,25],[width-22,25],[22,height-25],[width-22,height-25]].forEach(([x,y]) => {
+      context.beginPath(); context.moveTo(x-3,y);context.lineTo(x+3,y);
+      context.moveTo(x,y-3);context.lineTo(x,y+3);context.stroke();
+    });
+    const paths = [];
+    for (let meridian = 0; meridian < 10; meridian++) {
+      const longitude = meridian / 10 * Math.PI;
+      const points = [];
+      for (let step = 0; step <= 100; step++) {
+        const t = step / 100 * Math.PI * 2;
+        points.push(project(radius * Math.cos(t) * Math.cos(longitude), radius * Math.sin(t), radius * Math.cos(t) * Math.sin(longitude)));
       }
-      var cur = project(s, s.z);
-      var prev = project(s, prevZ);
-      var t = 1 - s.z;
-      ctx.strokeStyle = "rgba(" + starRGB + "," + (0.10 + t * 0.40).toFixed(3) + ")";
-      ctx.lineWidth = 0.4 + t * 1.15;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(prev.x, prev.y);
-      ctx.lineTo(cur.x, cur.y);
-      ctx.stroke();
+      paths.push(points);
     }
-  }
-
-  function drawComets() {
-    for (var j = comets.length - 1; j >= 0; j--) {
-      var c = comets[j];
-      var d = Math.sqrt(c.vx * c.vx + c.vy * c.vy) || 1;
-      var tailX = c.x - (c.vx / d) * c.len;
-      var tailY = c.y - (c.vy / d) * c.len;
-
-      var g = ctx.createLinearGradient(c.x, c.y, tailX, tailY);
-      g.addColorStop(0, hexToRgba(accent, 0.85));
-      g.addColorStop(0.35, hexToRgba(accent, 0.30));
-      g.addColorStop(1, hexToRgba(accent, 0));
-
-      ctx.strokeStyle = g;
-      ctx.lineWidth = 1.6;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(c.x, c.y);
-      ctx.lineTo(tailX, tailY);
-      ctx.stroke();
-
-      ctx.fillStyle = hexToRgba(accent, 0.9);
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, 1.7, 0, Math.PI * 2);
-      ctx.fill();
-
-      if (c.y > H + 260 || c.x < -320 || c.x > W + 320) comets.splice(j, 1);
-    }
-  }
-
-  /* ---------- light mode ---------- */
-  function drawMotes(step) {
-    for (var i = 0; i < motes.length; i++) {
-      var m = motes[i];
-      if (step) {
-        m.phase += m.speed * step;
-        m.x += m.vx * step + Math.sin(m.phase) * 0.12 * step;
-        m.y += m.vy * step;
-        if (m.y < -20) { m.y = H + 20; m.x = Math.random() * W; }
-        if (m.y > H + 20) { m.y = -20; m.x = Math.random() * W; }
-        if (m.x < -20) m.x = W + 20;
-        if (m.x > W + 20) m.x = -20;
+    for (let parallel = -2; parallel <= 2; parallel++) {
+      const latitude = parallel * Math.PI / 7;
+      const r = radius * Math.cos(latitude);
+      const points = [];
+      for (let step = 0; step <= 100; step++) {
+        const t = step / 100 * Math.PI * 2;
+        points.push(project(r * Math.cos(t), radius * Math.sin(latitude), r * Math.sin(t)));
       }
-      ctx.fillStyle = "rgba(" + inkRGB + "," + m.a.toFixed(3) + ")";
-      ctx.beginPath();
-      ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-      ctx.fill();
+      paths.push(points);
     }
-  }
-
-  function spawnDrop() {
-    var dir = Math.random() < 0.5 ? 1 : -1;
-    var ang = Math.PI / 2 + dir * (0.18 + Math.random() * 0.5);
-    var speed = 5.5 + Math.random() * 4.5;
-    drops.push({
-      x: W * (0.1 + Math.random() * 0.8),
-      y: -60 - Math.random() * 40,
-      vx: Math.cos(ang) * speed,
-      vy: Math.abs(Math.sin(ang)) * speed,
-      len: 70 + Math.random() * 120,
-      w: 1.6 + Math.random() * 1.8,
-      bloomAt: H * (0.28 + Math.random() * 0.42)
-    });
-  }
-
-  function bloom(x, y) {
-    var maxR = 26 + Math.random() * 62;
-    ripples.push({ x: x, y: y, age: 0, delay: 0, maxR: maxR, peak: 0.30 });
-    ripples.push({ x: x, y: y, age: 0, delay: 0.22, maxR: maxR * 0.6, peak: 0.16 });
-  }
-
-  function drawDrops(step) {
-    for (var j = drops.length - 1; j >= 0; j--) {
-      var c = drops[j];
-      if (step) { c.x += c.vx * step; c.y += c.vy * step; }
-
-      var d = Math.sqrt(c.vx * c.vx + c.vy * c.vy) || 1;
-      var tx = c.x - (c.vx / d) * c.len;
-      var ty = c.y - (c.vy / d) * c.len;
-
-      var g = ctx.createLinearGradient(c.x, c.y, tx, ty);
-      g.addColorStop(0, "rgba(" + inkRGB + ",0.55)");
-      g.addColorStop(0.5, "rgba(" + inkRGB + ",0.16)");
-      g.addColorStop(1, "rgba(" + inkRGB + ",0)");
-      ctx.strokeStyle = g;
-      ctx.lineWidth = c.w;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(c.x, c.y);
-      ctx.lineTo(tx, ty);
-      ctx.stroke();
-
-      ctx.fillStyle = hexToRgba(accent, 0.85);
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, c.w * 0.7, 0, Math.PI * 2);
-      ctx.fill();
-
-      if (step && c.y >= c.bloomAt) { bloom(c.x, c.y); drops.splice(j, 1); continue; }
-      if (c.y > H + 80 || c.x < -120 || c.x > W + 120) drops.splice(j, 1);
+    const orbit = [];
+    for (let step = 0; step <= 140; step++) orbit.push(project(...orbitPoint(step / 140 * Math.PI * 2, .52)));
+    curve(orbit, false, .18, line, .8);
+    paths.forEach(points => curve(points, false, .14));
+    paths.forEach(points => curve(points, true, .58 + hoverStrength * .14));
+    curve(orbit, true, .65, line, .8);
+    const satellite = project(...orbitPoint(satelliteAngle, .52));
+    context.globalAlpha = satellite[2] > 0 ? .45 : 1;
+    context.fillStyle = ink;
+    context.beginPath();context.arc(satellite[0],satellite[1],2.5,0,Math.PI*2);context.fill();
+    context.globalAlpha *= .22;
+    context.beginPath();context.arc(satellite[0],satellite[1],6,0,Math.PI*2);context.stroke();
+    if (hoverStrength > .01) {
+      context.globalAlpha = hoverStrength * .35;
+      context.setLineDash([2, 4]);
+      context.beginPath(); context.moveTo(width / 2, height / 2);
+      context.lineTo(pointerX, pointerY);context.stroke();context.setLineDash([]);
+      context.globalAlpha = hoverStrength * .7;
+      context.beginPath();context.arc(pointerX,pointerY,3,0,Math.PI*2);context.stroke();
     }
+    context.globalAlpha = 1;
+    if (readout) readout.textContent = `${degrees(yaw)} / ${degrees(pitch)}`;
   }
 
-  function drawRipples(step) {
-    for (var j = ripples.length - 1; j >= 0; j--) {
-      var r = ripples[j];
-      if (step) r.age += step * 0.011;
-      var t = r.age - r.delay;
-      if (t < 0) continue;
-      if (t >= 1) { ripples.splice(j, 1); continue; }
-      var e = 1 - Math.pow(1 - t, 2);
-      var alpha = Math.pow(1 - t, 1.6) * r.peak;
-      ctx.strokeStyle = "rgba(" + inkRGB + "," + alpha.toFixed(3) + ")";
-      ctx.lineWidth = Math.max(1.5 * (1 - t * 0.5), 0.4);
-      ctx.beginPath();
-      ctx.arc(r.x, r.y, e * r.maxR, 0, Math.PI * 2);
-      ctx.stroke();
+  function tick(time) {
+    frame = 0;
+    if (!visible || document.hidden || motion.matches) return;
+    const dt = last ? Math.min((time - last) / 16.667, 3) : 1;
+    last = time;
+    const ease = 1 - Math.pow(.92, dt);
+    yaw += (targetYaw - yaw) * ease;
+    pitch += (targetPitch - pitch) * ease;
+    hoverStrength += ((hovering ? 1 : 0) - hoverStrength) * ease;
+    velocity += impulse;
+    impulse = 0;
+    velocity *= Math.pow(.95, dt);
+    rotation += (.0012 * (1 - hoverStrength * .8) + velocity) * dt;
+    satelliteAngle += .004 * dt;
+    // A pointer that stops moving should stop adding momentum.
+    if (time - pointerAt > 90) previousX = null;
+    draw(); frame = requestAnimationFrame(tick);
+  }
+  function sync() {
+    cancelAnimationFrame(frame); frame = 0; last = 0;
+    if (motion.matches) {
+      yaw = targetYaw = 0; pitch = targetPitch = -.32;
+      velocity = impulse = hoverStrength = 0;
+      hovering = false; art.classList.remove('is-engaged');
+      if (caption) caption.textContent = 'a little perspective';
     }
+    draw();
+    if (visible && !document.hidden && !motion.matches) frame = requestAnimationFrame(tick);
   }
-
-  /* ---------- loop ---------- */
-  function frame(ts) {
-    var step = lastTs ? Math.min((ts - lastTs) / 16.67, 3) : 1;
-    lastTs = ts;
-
-    ctx.clearRect(0, 0, W, H);
-
-    if (mode === "dark") {
-      drawStars(step);
-      if (ts > nextStreakAt && comets.length < 2) { spawnComet(); nextStreakAt = ts + 3200 + Math.random() * 4200; }
-      drawComets();
-    } else {
-      drawMotes(step);
-      drawRipples(step);
-      if (ts > nextStreakAt && drops.length < 3) { spawnDrop(); nextStreakAt = ts + 1400 + Math.random() * 2000; }
-      drawDrops(step);
+  // Page movement gently steers the object; moving over it gives direct control.
+  document.addEventListener('pointermove', event => {
+    if (!visible || motion.matches || !fine.matches || event.pointerType === 'touch') return;
+    const box = canvas.getBoundingClientRect();
+    if (!box.width || !box.height) return;
+    const localX = (event.clientX - box.left) / box.width;
+    const localY = (event.clientY - box.top) / box.height;
+    const over = localX >= 0 && localX <= 1 && localY >= 0 && localY <= 1;
+    const x = over ? (localX - .5) * 2 : (event.clientX / innerWidth - .5) * 2;
+    const y = over ? (localY - .5) * 2 : (event.clientY / innerHeight - .5) * 2;
+    targetYaw = clamp(x, -1, 1) * (over ? 1.25 : .3);
+    targetPitch = -.32 + clamp(y, -1, 1) * (over ? .9 : .22);
+    pointerX = localX * width; pointerY = localY * height;
+    if (over && previousX !== null) impulse += clamp(event.clientX - previousX, -30, 30) * .00018;
+    previousX = over ? event.clientX : null;
+    pointerAt = performance.now();
+    if (hovering !== over) {
+      hovering = over; art.classList.toggle('is-engaged', over);
+      if (caption) caption.textContent = over ? 'a change in perspective' : 'a little perspective';
     }
-
-    rafId = requestAnimationFrame(frame);
-  }
-
-  function start() {
-    if (rafId !== null) return;
-    lastTs = 0;
-    nextStreakAt = performance.now() + 1200 + Math.random() * 2600;
-    rafId = requestAnimationFrame(frame);
-  }
-
-  function stop() {
-    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-  }
-
-  function renderStatic() {
-    ctx.clearRect(0, 0, W, H);
-    if (mode === "dark") drawStars(0);
-    else drawMotes(0);
-  }
-
-  function onResize() {
-    resize();
-    if (reduce) renderStatic();
-  }
-
-  readTheme();
-  resize();
-
-  if (reduce) {
-    renderStatic();
-  } else {
-    start();
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) stop(); else start();
-    });
-  }
-
-  var resizeTimer = null;
-  window.addEventListener("resize", function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(onResize, 150);
+  }, { passive: true });
+  document.documentElement.addEventListener('pointerleave', () => {
+    hovering = false; previousX = null; targetYaw = 0; targetPitch = -.32;
+    art.classList.remove('is-engaged');
+    if (caption) caption.textContent = 'a little perspective';
   });
+  new MutationObserver(() => { palette(); draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(canvas);
+  }
+  document.addEventListener('visibilitychange', sync);
+  motion.addEventListener('change', sync);
+  sync();
 
-  if ("MutationObserver" in window) {
-    new MutationObserver(function () {
-      var before = mode;
-      readTheme();
-      if (mode !== before && reduce) renderStatic();
-    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  // A small directional response on the closing arrow, never on the text.
+  const contact = document.querySelector('.contact');
+  contact?.addEventListener('pointermove', event => {
+    if (motion.matches || !fine.matches) return;
+    const box = contact.getBoundingClientRect();
+    contact.style.setProperty('--arrow-x', `${((event.clientX - box.left) / box.width - .5) * 18}px`);
+    contact.style.setProperty('--arrow-y', `${((event.clientY - box.top) / box.height - .5) * 14}px`);
+  }, { passive: true });
+  contact?.addEventListener('pointerleave', () => {
+    contact.style.setProperty('--arrow-x', '0px');contact.style.setProperty('--arrow-y', '0px');
+  });
+  if ('IntersectionObserver' in window && !motion.matches) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold: .08 });
+    document.querySelectorAll('.section-head, .tool-list, .note-list').forEach(element => { element.classList.add('reveal-pending'); observer.observe(element); });
   }
 })();

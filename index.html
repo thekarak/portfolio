@@ -1,413 +1,147 @@
 <!doctype html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sourasis Karak — Machine Learning & Data Science</title>
-  <meta name="description" content="Sourasis Karak — second-year CS undergrad at JIS College of Engineering, building honest tools in machine learning, data science and LLM evaluation." />
-  <script>(function(){try{var t=localStorage.getItem("sk-theme");var d=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(t==="dark"||(!t&&d)){document.documentElement.setAttribute("data-theme","dark");}}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sourasis Karak — Machine learning &amp; systems</title>
+  <meta name="description" content="Sourasis Karak, computer science undergraduate in Kolkata. Building reliable machine learning systems, scientific agents, and tools for understanding language models.">
+  <meta name="author" content="Sourasis Karak">
+  <meta name="theme-color" content="#f8f7f4" id="theme-color">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sourasis Karak — Machine learning & systems">
+  <meta property="og:description" content="Thoughtful systems. Verifiable results. Selected work in machine learning, scientific agents, and developer tools.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+  <script>
+    (function(){try{var t=localStorage.getItem('sk-theme');document.documentElement.dataset.theme=t==='dark'||t==='light'?t:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}catch(e){}})();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=12">
+  <script src="script.js?v=12" defer></script>
+  <script src="motion.js?v=12" defer></script>
 </head>
-<body>
-
-  <canvas id="bg-motion" aria-hidden="true"></canvas>
-
-  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
-
-  <header class="site-header">
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+  <header class="site-header" id="site-header">
     <div class="header-inner">
-      <a class="brand" href="#top">
-        <span class="brand-mark" aria-hidden="true">SK</span>
-        <span class="brand-name">Sourasis Karak</span>
-      </a>
-
-      <nav class="nav" aria-label="Sections">
-        <a href="#work">work</a>
-        <a href="#experience">experience</a>
-        <a href="#skills">skills</a>
-        <a href="#notes">notes</a>
-        <a href="#contact">contact</a>
+      <a class="brand" href="#top" aria-label="Sourasis Karak, back to top">sk<span class="brand-period">.</span></a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#about" data-section="about" class="is-active">About</a>
+        <a href="#projects" data-section="projects">Work</a>
+        <a href="#notes" data-section="notes">Notes</a>
+        <a href="#contact" data-section="contact">Contact</a>
       </nav>
-
-      <div class="header-actions">
-        <button id="theme-toggle" class="icon-btn" aria-label="Toggle light and dark theme">
-          <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><line x1="12" y1="2.5" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="21.5"></line><line x1="4.4" y1="4.4" x2="6.2" y2="6.2"></line><line x1="17.8" y1="17.8" x2="19.6" y2="19.6"></line><line x1="2.5" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="21.5" y2="12"></line><line x1="4.4" y1="19.6" x2="6.2" y2="17.8"></line><line x1="17.8" y1="6.2" x2="19.6" y2="4.4"></line></svg>
-          <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M20.5 13.2A8.5 8.5 0 1 1 10.8 3.5a6.5 6.5 0 0 0 9.7 9.7z"></path></svg>
-        </button>
-        <button id="menu-toggle" class="icon-btn menu-btn" aria-label="Open menu" aria-expanded="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="8" x2="20" y2="8"></line><line x1="4" y1="16" x2="20" y2="16"></line></svg>
+      <div class="header-tools">
+        <span class="local-time" title="Local time in Kolkata, India"><span class="clock-dot" aria-hidden="true"></span><time id="local-clock" aria-label="Current time in Kolkata">--:--:--</time><span>IST</span></span>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false" title="Switch theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 13A8.5 8.5 0 1 1 11 3.5 6.5 6.5 0 0 0 20.5 13Z"/></svg>
         </button>
       </div>
-    </div>
-
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-      <a href="#work">work</a>
-      <a href="#experience">experience</a>
-      <a href="#skills">skills</a>
-      <a href="#notes">notes</a>
-      <a href="#contact">contact</a>
-      <button id="mobile-resume-btn" class="link-btn">resume</button>
     </div>
   </header>
-
-  <main id="top" class="wrap">
-
-    <section class="hero reveal">
-      <p class="hello">hi, i'm Sourasis</p>
-      <p class="lede">
-        a second-year computer science undergrad at <a href="https://jiscollege.ac.in/" target="_blank" rel="noopener">JIS College of Engineering</a>,
-        working mostly on machine learning and data science. i build small, honest tools — leak-free
-        prediction pipelines, evidence-first LLM evaluations, and utilities that make model
-        behaviour and API costs legible.
-      </p>
-      <p class="lede muted">
-        i like the boring parts done well: validation that doesn't leak, features you can explain,
-        and results someone else can reproduce. right now i'm reading broadly across statistical
-        modeling and applied NLP, and shipping whatever i learn next.
-      </p>
-
-      <div class="hero-links">
-        <a href="https://github.com/thekarak" target="_blank" rel="noopener">github</a>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <a href="https://www.linkedin.com/in/sourasiskarak" target="_blank" rel="noopener">linkedin</a>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <a href="https://x.com/imskarak" target="_blank" rel="noopener">x</a>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <a href="mailto:soykarak@gmail.com">email</a>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <a href="assets/resume.pdf" download="Sourasis_Karak_Resume.pdf">cv.pdf</a>
+  <main id="main" class="page">
+    <section id="about" class="about" aria-labelledby="about-name">
+      <div class="intro-meta"><span>INDEPENDENT WORK / SELECTED PROJECTS</span><span>KOLKATA, INDIA <span aria-hidden="true">↗</span></span></div>
+      <div class="hero-masthead">
+        <h1 id="about-name">Sourasis <span class="surname">Karak</span><span class="name-period">.</span></h1>
+        <p class="hero-discipline"><span>MACHINE LEARNING</span><span>DATA &amp; SCIENTIFIC SYSTEMS</span></p>
       </div>
-
-      <p class="status">
-        <span class="pulse" aria-hidden="true"></span>
-        shipped <strong>BioAgent-ST</strong> &nbsp;·&nbsp; open to internships & research collaborations
-        &nbsp;·&nbsp; <span id="local-time" class="clock">--:--:-- IST</span>
-      </p>
+      <div class="about-grid">
+        <div class="bio">
+          <p class="bio-lead">Build it. Question it.<br><span>Make it worth trusting.</span></p>
+          <p>I'm a computer science undergraduate at <span class="ink">JIS College of Engineering</span>, building machine learning systems and tools that make their behaviour easier to understand.</p>
+          <p>My focus is the work around the model: meaningful evaluation, traceable evidence, and interfaces that explain what happened.</p>
+          <div class="hero-actions"><a class="primary-link" href="#projects">Explore my work <span aria-hidden="true">↓</span></a><a class="resume-link" href="assets/resume.pdf" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span><span class="sr-only"> (PDF, opens in new tab)</span></a></div>
+          <div class="intro-links"><a href="https://github.com/thekarak" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:soykarak@gmail.com">Email <span aria-hidden="true">↗</span></a><span class="intro-detail">Curious by default.</span></div>
+        </div>
+        <aside class="profile-col" aria-label="Portrait and interactive orbital study">
+          <span class="profile-index" aria-hidden="true">01 / A LITTLE PERSPECTIVE</span>
+          <div class="portrait-wrap" data-tilt><div class="portrait"><img src="assets/avatar.jpg" alt="Sourasis Karak" width="400" height="400" fetchpriority="high"><span class="portrait-caption">SK / KOLKATA</span></div></div>
+          <div class="orbit-art" aria-hidden="true"><div class="orbit-stage"><canvas id="orbit-canvas" width="280" height="230"></canvas><span class="orbit-label">AN EXERCISE IN PERSPECTIVE</span></div><span class="orbit-caption">a little perspective</span><span class="orbit-readout">+00° / −18°</span></div>
+          <span class="profile-footnote" aria-hidden="true">MOVE YOUR POINTER. CHANGE YOUR VIEW.</span>
+        </aside>
+      </div>
+      <div class="availability"><span class="status-dot" aria-hidden="true"></span><p>Open to internships &amp; research collaborations</p><a href="#contact">Start a conversation <span aria-hidden="true">↗</span></a></div>
     </section>
-
-    <aside class="now reveal">
-      <span class="eyebrow">now</span>
-      <p>
-        Released <strong>BioAgent-ST</strong> (<a href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">v1.0-paper</a>) with Sourav Sarkar — a verification-first scientific agent for spatial transcriptomics (10x Visium) that couples deterministic Scanpy / Squidpy execution with dual-loop verifier-critic gating and SHA-256 SQLite provenance.
-      </p>
-    </aside>
-
-    <section id="work" class="section reveal">
-      <div class="section-head">
-        <span class="eyebrow">selected work</span>
-        <h2 class="section-title">things i've built</h2>
-      </div>
-
-      <div class="work-list">
-        <article class="work-item">
-          <div class="work-head">
-            <h3 class="work-title">BioAgent-ST <span class="flag">new</span></h3>
-            <span class="work-meta">scientific agents · spatial biology · 2026</span>
-          </div>
-          <p class="work-sub">A verification-first scientific agent for spatial transcriptomics with deterministic execution guarantees.</p>
-          <p class="work-desc">
-            Built with Sourav Sarkar. Replaces unconstrained scientific LLMs with a verified state machine:
-            the LLM is strictly an orchestrator, while all statistical and spatial analyses (QC, Leiden clustering,
-            Moran's <em>I</em>) run deterministically via Scanpy, Squidpy, and SciPy. Features a dual-loop
-            verifier-critic with a 5-state claim rule engine, fail-closed policy gating, 154 unit tests, and
-            an immutable SQLite provenance ledger where every slice and plot is SHA-256 content-hashed.
-          </p>
-          <div class="work-tags">
-            <span class="tag">Python</span><span class="tag">Scanpy</span><span class="tag">Squidpy</span><span class="tag">FastAPI</span><span class="tag">Next.js 16</span><span class="tag">SQLite Ledger</span><span class="tag">Formal Verification</span>
-          </div>
-          <div class="work-links">
-            <a href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">source ↗</a>
+    <section class="section projects" id="projects" aria-labelledby="projects-title">
+      <div class="section-head"><div><p class="kicker">01 / SELECTED WORK</p><h2 id="projects-title">Selected work<span class="heading-period">.</span></h2></div><a class="quiet-link" href="https://github.com/thekarak?tab=repositories" target="_blank" rel="noopener">All repositories <span aria-hidden="true">↗</span></a></div>
+      <p class="section-intro">Scientific agents, evidence-first evaluations, and tools built to be useful.</p>
+      <div class="filters" role="group" aria-label="Filter projects"><button class="filter-btn is-active" type="button" data-filter="all" aria-pressed="true" aria-controls="project-list">All work</button><button class="filter-btn" type="button" data-filter="llm" aria-pressed="false" aria-controls="project-list">Agents &amp; LLMs</button><button class="filter-btn" type="button" data-filter="applied" aria-pressed="false" aria-controls="project-list">Applied ML</button><button class="filter-btn" type="button" data-filter="tooling" aria-pressed="false" aria-controls="project-list">Tools</button><span id="project-count" class="project-count" aria-live="polite">6 projects</span></div>
+      <div id="project-list" class="project-list">
+        <article class="project project-featured" id="project-bioagent" data-categories="llm">
+          <span class="project-index" aria-hidden="true">01</span>
+          <div class="project-content">
+            <div class="project-heading"><h3><a href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">BioAgent-ST <span class="external-arrow" aria-hidden="true">↗</span></a></h3><span class="project-tag">FEATURED / SCIENTIFIC AGENTS</span></div>
+            <div class="featured-body"><div class="featured-copy">
+              <p class="featured-deck">Scientific analysis.<br>With an evidence trail.</p>
+              <p class="project-desc">A verification-first agent for spatial transcriptomics. The model plans the work; deterministic tools run the science. Every claim stays attached to its evidence.</p>
+              <p class="project-role">Co-created with Sourav Sarkar</p>
+              <p class="project-stack">Python · Scanpy · FastAPI · Next.js · SQLite</p>
+              <div class="project-actions"><a href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">Explore source ↗</a><button class="abstract-toggle" type="button" aria-expanded="false" aria-controls="detail-bioagent">Behind the build <span class="plus" aria-hidden="true">+</span></button></div>
+            </div>
+            <figure class="system-figure" aria-label="BioAgent-ST workflow: a typed plan passes through deterministic execution and a verification gate into an evidence ledger.">
+              <figcaption><span>WORKFLOW / SCHEMATIC</span><span aria-hidden="true">↗</span></figcaption>
+              <div class="system-step"><span class="step-number">01</span><div><strong>Plan</strong><span>Typed workflow</span></div><span class="step-symbol" aria-hidden="true">⌘</span></div>
+              <div class="system-connector" aria-hidden="true"></div>
+              <div class="system-step"><span class="step-number">02</span><div><strong>Execute</strong><span>Deterministic tools</span></div><span class="step-symbol" aria-hidden="true">↳</span></div>
+              <div class="system-connector" aria-hidden="true"></div>
+              <div class="system-step gate"><span class="step-number">03</span><div><strong>Verify</strong><span>Fail-closed policy gate</span></div><span class="step-symbol" aria-hidden="true">✓</span></div>
+              <div class="system-connector" aria-hidden="true"></div>
+              <div class="system-step"><span class="step-number">04</span><div><strong>Record</strong><span>SHA-256 provenance</span></div><span class="step-symbol" aria-hidden="true">↗</span></div>
+              <p class="figure-note">The model orchestrates. The evidence decides.</p>
+            </figure></div>
+            <div class="abstract-body" id="detail-bioagent" hidden><p>Built with Sourav Sarkar. Typed workflow plans separate the language model from scientific calculations. Policy gates validate execution; a SQLite ledger and SHA-256 hashes preserve the evidence trail. The repository documents 154 unit tests.</p><a class="text-link" href="https://github.com/thekarak/Bioagent-ST#quickstart--local-reproduction" target="_blank" rel="noopener">Explore the architecture &amp; reproduction steps ↗</a></div>
           </div>
         </article>
-
-        <article class="work-item">
-          <div class="work-head">
-            <h3 class="work-title">WineLens</h3>
-            <span class="work-meta">data science · 2026</span>
-          </div>
-          <p class="work-sub">Predicting wine quality from 11 physicochemical measurements, end to end.</p>
-          <p class="work-desc">
-            Exploratory analysis of the UCI vinho verde dataset — distributions, correlations,
-            duplicates, outliers — then a tuned Random Forest Regressor (MAE <strong>0.414</strong>,
-            R² <strong>0.553</strong>) against a Linear Regression baseline, with permutation
-            importance surfacing alcohol, sulphates and volatile acidity as the strongest signals.
-          </p>
-          <div class="work-tags">
-            <span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Random Forest</span><span class="tag">EDA</span><span class="tag">Streamlit</span>
-          </div>
-          <div class="work-links">
-            <a href="https://github.com/thekarak/Winelens" target="_blank" rel="noopener">source ↗</a>
-          </div>
+        <article class="project" id="project-winelens" data-categories="applied">
+          <span class="project-index" aria-hidden="true">02</span><div class="project-content"><div class="project-heading"><h3><a href="https://github.com/thekarak/Winelens" target="_blank" rel="noopener">WineLens <span class="external-arrow" aria-hidden="true">↗</span></a></h3><span class="project-tag"><svg class="project-glyph" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5v23h24"/><path class="glyph-trace" d="m8 24 6-4 6-8 8-6"/><circle cx="10" cy="18" r="1"/><circle cx="16" cy="24" r="1"/><circle cx="20" cy="9" r="1"/><circle cx="27" cy="13" r="1"/></svg><span>DATA SCIENCE</span></span></div>
+          <p class="project-desc">From chemical measurements to wine-quality estimates. Exploratory analysis, model comparisons, and a closer look at prediction errors.</p><p class="project-stack">scikit-learn · pandas · Random forests · Streamlit</p>
+          <div class="project-actions"><a href="https://github.com/thekarak/Winelens" target="_blank" rel="noopener">Source ↗</a><button class="abstract-toggle" type="button" aria-expanded="false" aria-controls="detail-winelens">Behind the build <span class="plus" aria-hidden="true">+</span></button></div>
+          <div class="abstract-body" id="detail-winelens" hidden><p>Compares regression and classification on the UCI wine-quality data, with an interactive Streamlit app for 11 chemical measurements. The tuned random forest reports an exploratory MAE of 0.414. Repeated use of the test split means the result is not an independent estimate of generalisation.</p><a class="text-link" href="https://github.com/thekarak/Winelens#limitations" target="_blank" rel="noopener">Read the experiments &amp; limitations ↗</a></div></div>
         </article>
-
-        <article class="work-item">
-          <div class="work-head">
-            <h3 class="work-title">TruthScope</h3>
-            <span class="work-meta">rag · evaluation · 2026</span>
-          </div>
-          <p class="work-sub">An evidence-first way to see where RAG systems hallucinate.</p>
-          <p class="work-desc">
-            A 60-question benchmark across 51 space-mission documents comparing baseline, loose
-            Top-3 and strict Top-3 retrieval. Every answer is split into claims and checked against
-            the retrieved evidence, so failures are visible instead of hidden behind one score:
-            hallucination falls <strong>93.3% → 6.7%</strong> and token F1 rises
-            <strong>0.22 → 0.85</strong>.
-          </p>
-          <div class="work-tags">
-            <span class="tag">RAG</span><span class="tag">Python</span><span class="tag">Sentence Transformers</span><span class="tag">Streamlit</span><span class="tag">Benchmarking</span>
-          </div>
-          <div class="work-links">
-            <a href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">view project ↗</a>
-          </div>
+        <article class="project" id="project-truthscope" data-categories="llm">
+          <span class="project-index" aria-hidden="true">03</span><div class="project-content"><div class="project-heading"><h3><a href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">TruthScope <span class="external-arrow" aria-hidden="true">↗</span></a></h3><span class="project-tag"><svg class="project-glyph" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h17l5 5v20H5Z"/><path d="M21 4v6h6M9 14h10M9 19h6M9 24h6"/><path class="glyph-trace" d="m19 21 3 3 6-7"/></svg><span>RAG &amp; EVALUATION</span></span></div>
+          <p class="project-desc">An evidence-first RAG explorer that breaks answers into claims, checks their support, and makes the source evidence visible.</p><p class="project-stack">Python · Retrieval · Claim verification · Streamlit</p>
+          <div class="project-actions"><a href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">Source ↗</a><button class="abstract-toggle" type="button" aria-expanded="false" aria-controls="detail-truthscope">Behind the build <span class="plus" aria-hidden="true">+</span></button></div>
+          <div class="abstract-body" id="detail-truthscope" hidden><p>A student exploration of answer verification, with a claim inspector, evidence viewer, and side-by-side system comparison. The committed benchmark uses a deterministic local simulator; it demonstrates the pipeline rather than establishing real-world LLM performance. Claim support is checked heuristically against the indexed corpus.</p><a class="text-link" href="https://github.com/thekarak/Reducing-LLM-Hallucinations#truthscope-an-evidence-first-rag-hallucination-project" target="_blank" rel="noopener">Read the methods &amp; limitations ↗</a></div></div>
         </article>
-
-        <article class="work-item">
-          <div class="work-head">
-            <h3 class="work-title">TokenLab</h3>
-            <span class="work-meta">llm tooling · 2026</span>
-          </div>
-          <p class="work-sub">A tokenizer, converter and API cost lab in a single page.</p>
-          <p class="work-desc">
-            Live token splitting across four exact OpenAI encodings, a token-ID decoder, a both-way
-            words ⇄ tokens converter, and a cost calculator over a price table of
-            <strong>61 real models</strong>. The byte-level BPE engine is verified
-            <strong>bit-identical to tiktoken</strong> on 20 test cases — no framework, no build
-            step, no backend.
-          </p>
-          <div class="work-tags">
-            <span class="tag">JavaScript</span><span class="tag">Byte-level BPE</span><span class="tag">LLM pricing</span><span class="tag">Vercel</span>
-          </div>
-          <div class="work-links">
-            <a href="https://tokenlabx.vercel.app" target="_blank" rel="noopener">live demo ↗</a>
-            <a href="https://github.com/thekarak/Tokenlab" target="_blank" rel="noopener">source ↗</a>
-          </div>
+        <article class="project" id="project-tokenlab" data-categories="llm tooling">
+          <span class="project-index" aria-hidden="true">04</span><div class="project-content"><div class="project-heading"><h3><a href="https://tokenlabx.vercel.app" target="_blank" rel="noopener">TokenLab <span class="external-arrow" aria-hidden="true">↗</span></a></h3><span class="project-tag"><svg class="project-glyph" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="glyph-trace" d="m10 7-7 9 7 9m12-18 7 9-7 9M19 4l-6 24"/></svg><span>DEVELOPER TOOLS</span></span></div>
+          <p class="project-desc">A small lab for seeing how language models read text. Inspect tokens, decode IDs, and compare estimated API costs, all in the browser.</p><p class="project-stack">JavaScript · Byte-pair encoding · tiktoken parity</p>
+          <div class="project-actions"><a href="https://github.com/thekarak/Tokenlab" target="_blank" rel="noopener">Source ↗</a><a href="https://tokenlabx.vercel.app" target="_blank" rel="noopener">Live demo ↗</a><button class="abstract-toggle" type="button" aria-expanded="false" aria-controls="detail-tokenlab">Behind the build <span class="plus" aria-hidden="true">+</span></button></div>
+          <div class="abstract-body" id="detail-tokenlab" hidden><p>Implements byte-level BPE for four OpenAI encodings, checked against tiktoken on 20 cases. Other model families are explicitly labelled as approximations. The 61-model pricing table is a September 2026 snapshot. No backend or API keys required.</p><a class="text-link" href="https://github.com/thekarak/Tokenlab#tech-stack" target="_blank" rel="noopener">Read the implementation notes ↗</a></div></div>
         </article>
-
-        <article class="work-item">
-          <div class="work-head">
-            <h3 class="work-title">VARUNA</h3>
-            <span class="work-meta">computer vision · 2026</span>
-          </div>
-          <p class="work-sub">Maritime oil-spill forensics from Sentinel-1 SAR — Smart India Hackathon 2026.</p>
-          <p class="work-desc">
-            Part of Team CODE_FORUN. A custom 1.17M-parameter CNN with <strong>Grad-CAM</strong>
-            localizes slicks on SAR imagery, while U-Net segmentation, Bonn Agreement volume
-            modeling and a Lagrangian drift hindcast reconstruct a probable discharge origin.
-            PostGIS then correlates AIS trajectories and blackouts to rank investigative leads.
-          </p>
-          <div class="work-tags">
-            <span class="tag">PyTorch</span><span class="tag">Grad-CAM</span><span class="tag">U-Net</span><span class="tag">PostGIS / AIS</span><span class="tag">FastAPI</span><span class="tag">Docker</span>
-          </div>
-          <div class="work-links">
-            <a href="https://varuna-sih.vercel.app/" target="_blank" rel="noopener">live demo ↗</a>
-            <a href="https://github.com/thekarak/VARUNA" target="_blank" rel="noopener">source ↗</a>
-          </div>
+        <article class="project" id="project-varuna" data-categories="applied">
+          <span class="project-index" aria-hidden="true">05</span><div class="project-content"><div class="project-heading"><h3><a href="https://github.com/thekarak/VARUNA" target="_blank" rel="noopener">VARUNA <span class="external-arrow" aria-hidden="true">↗</span></a></h3><span class="project-tag"><svg class="project-glyph" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="glyph-trace" d="M3 12q4-7 8 0t8 0 10 0M3 20q4-7 8 0t8 0 10 0"/><path d="M7 28h18M16 2v4"/></svg><span>COMPUTER VISION</span></span></div>
+          <p class="project-desc">Maritime intelligence from satellite radar: oil-spill detection, visual explanations, ocean-drift reconstruction, and vessel-trajectory analysis.</p><p class="project-stack">Python · CNN · Sentinel-1 SAR · Grad-CAM</p>
+          <div class="project-actions"><a href="https://github.com/thekarak/VARUNA" target="_blank" rel="noopener">Source ↗</a><a href="https://varuna-sih.vercel.app/" target="_blank" rel="noopener">Live demo ↗</a><button class="abstract-toggle" type="button" aria-expanded="false" aria-controls="detail-varuna">Behind the build <span class="plus" aria-hidden="true">+</span></button></div>
+          <div class="abstract-body" id="detail-varuna" hidden><p>Built with Team CODE_FORUN for Smart India Hackathon 2026. A compact CNN classifies Sentinel-1 SAR scenes, with Grad-CAM to inspect the regions behind a prediction. The broader platform brings together slick segmentation, drift hindcasting, and AIS trajectory correlation in a geographic interface.</p><a class="text-link" href="https://github.com/thekarak/VARUNA#system-architecture" target="_blank" rel="noopener">Explore the system architecture ↗</a></div></div>
         </article>
-
-        <article class="work-item">
-          <div class="work-head">
-            <h3 class="work-title">RoastMeBuddy</h3>
-            <span class="work-meta">web + llm · 2025</span>
-          </div>
-          <p class="work-sub">Structured, deterministic feedback on technical CVs.</p>
-          <p class="work-desc">
-            A shipped app that scores résumés against strict JSON output schemas, keeping parsing
-            deterministic across wildly different formats. Deployed on Vercel with streaming APIs.
-          </p>
-          <div class="work-tags">
-            <span class="tag">LLM APIs</span><span class="tag">JSON Schema</span><span class="tag">JavaScript</span><span class="tag">Vercel</span>
-          </div>
-          <div class="work-links">
-            <a href="https://roastmebuddy.vercel.app" target="_blank" rel="noopener">live demo ↗</a>
-            <a href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">source ↗</a>
-          </div>
+        <article class="project" id="project-roastme" data-categories="llm tooling">
+          <span class="project-index" aria-hidden="true">06</span><div class="project-content"><div class="project-heading"><h3><a href="https://roastmebuddy.vercel.app/" target="_blank" rel="noopener">RoastMeBuddy <span class="external-arrow" aria-hidden="true">↗</span></a></h3><span class="project-tag"><svg class="project-glyph" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h17l5 5v21H5Z"/><path d="M21 3v6h6M10 12h8M10 17h12M10 22h7"/><path class="glyph-trace" d="m25 17 5 4-5 4"/></svg><span>WEB &amp; LLMs</span></span></div>
+          <p class="project-desc">Structured feedback on technical CVs. A shipped résumé-review app with strict JSON output schemas, deterministic scoring, and streaming responses.</p><p class="project-stack">JavaScript · LLM APIs · JSON Schema · Vercel</p>
+          <div class="project-actions"><a href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">Source ↗</a><a href="https://roastmebuddy.vercel.app/" target="_blank" rel="noopener">Live demo ↗</a><button class="abstract-toggle" type="button" aria-expanded="false" aria-controls="detail-roastme">Behind the build <span class="plus" aria-hidden="true">+</span></button></div>
+          <div class="abstract-body" id="detail-roastme" hidden><p>Built to make feedback on differently formatted technical CVs easier to parse and act on. Strict JSON schemas keep the response structure predictable, while streaming APIs deliver feedback progressively. Deployed on Vercel.</p><a class="text-link" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">Explore the implementation ↗</a></div></div>
         </article>
       </div>
+      <p class="work-footnote">More experiments live on <a href="https://github.com/thekarak" target="_blank" rel="noopener">GitHub ↗</a>. Methods and limitations are linked with each project.</p>
     </section>
-
-    <section id="experience" class="section reveal">
-      <div class="section-head">
-        <span class="eyebrow">background</span>
-        <h2 class="section-title">where i've been</h2>
-      </div>
-
-      <ol class="exp-list">
-        <li class="exp-item">
-          <span class="exp-when">2026 — now</span>
-          <div class="exp-body">
-            <h3>Co-Creator &amp; System Architect <span class="exp-sep">·</span> BioAgent-ST</h3>
-            <p class="exp-org">with Sourav Sarkar · open source (v1.0-paper)</p>
-            <p class="exp-desc">Engineered a verification-first scientific agent for 10x Visium spatial transcriptomics: deterministic Scanpy / Squidpy execution layer, dual-loop verifier-critic, 154 unit tests, and content-addressed SQLite provenance tracking.</p>
-          </div>
-        </li>
-        <li class="exp-item">
-          <span class="exp-when">2026 — now</span>
-          <div class="exp-body">
-            <h3>Backend &amp; ML pipeline <span class="exp-sep">·</span> VARUNA</h3>
-            <p class="exp-org">Team CODE_FORUN · Smart India Hackathon 2026</p>
-            <p class="exp-desc">SAR forensics pipeline: CNN + Grad-CAM localization, U-Net slick segmentation, Lagrangian drift hindcasting and PostGIS AIS attribution.</p>
-          </div>
-        </li>
-        <li class="exp-item">
-          <span class="exp-when">2026 — now</span>
-          <div class="exp-body">
-            <h3>Independent project <span class="exp-sep">·</span> TruthScope</h3>
-            <p class="exp-org">nlp / evaluation</p>
-            <p class="exp-desc">Built a 60-question RAG benchmark with claim-level evidence checks and regenerated category, ablation and claim-audit charts from the results run.</p>
-          </div>
-        </li>
-        <li class="exp-item">
-          <span class="exp-when">2025 — now</span>
-          <div class="exp-body">
-            <h3>Solo developer <span class="exp-sep">·</span> RoastMeBuddy</h3>
-            <p class="exp-org">live on Vercel</p>
-            <p class="exp-desc">Designed, built and shipped an LLM résumé-feedback app with strict JSON schemas, deterministic scoring and streaming APIs.</p>
-          </div>
-        </li>
-        <li class="exp-item">
-          <span class="exp-when">2025 — 2029</span>
-          <div class="exp-body">
-            <h3>B.Tech, Computer Science</h3>
-            <p class="exp-org">JIS College of Engineering · 2nd year</p>
-            <p class="exp-desc">Coursework and side-quests in statistical modeling, validation design and shipping small tools to production.</p>
-          </div>
-        </li>
-      </ol>
-
-      <div class="creed">
-        <span class="eyebrow">a few things i hold to</span>
-        <ul>
-          <li>measure before you model</li>
-          <li>a leak is not a feature</li>
-          <li>if you can't reproduce it, it didn't happen</li>
-          <li>ship small, explain everything</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="skills" class="section reveal">
-      <div class="section-head">
-        <span class="eyebrow">toolkit</span>
-        <h2 class="section-title">what i work with</h2>
-      </div>
-
-      <div class="skill-group">
-        <h3>Data science &amp; ML</h3>
-        <p>Statistical modeling · Spatial transcriptomics (Scanpy, Squidpy, AnnData) · Exploratory data analysis · Feature engineering · XGBoost · LightGBM · CatBoost · scikit-learn · Grouped k-fold CV · Pandas · NumPy</p>
-      </div>
-      <div class="skill-group">
-        <h3>Backend &amp; APIs</h3>
-        <p>FastAPI · Next.js · SQLite · REST APIs · Microservices · Prompt engineering &amp; verification · LLM APIs &amp; streaming</p>
-      </div>
-      <div class="skill-group">
-        <h3>Languages &amp; tooling</h3>
-        <p>Python · TypeScript / JavaScript · C · SQL · Git / GitHub · uv · Docker · Linux / Bash · Streamlit · Vercel</p>
-      </div>
-    </section>
-
-    <section id="notes" class="section reveal">
-      <div class="section-head">
-        <span class="eyebrow">writing &amp; notes</span>
-        <h2 class="section-title">loose thoughts</h2>
-      </div>
-
-      <div class="note-list">
-        <a class="note-item" href="https://github.com/thekarak/Bioagent-ST" target="_blank" rel="noopener">
-          <span class="note-meta">note · verification · scientific agents</span>
-          <h3>Why scientific agents must be deterministic state machines</h3>
-          <p>Generative models should orchestrate, not synthesize p-values or cluster counts. How we enforced fail-closed policy gates, dual-loop critics, and SHA-256 provenance in BioAgent-ST.</p>
-          <span class="note-cta">explore BioAgent-ST ↗</span>
-        </a>
-        <a class="note-item" href="https://github.com/thekarak/Reducing-LLM-Hallucinations" target="_blank" rel="noopener">
-          <span class="note-meta">note · rag · evaluation</span>
-          <h3>What RAG gets wrong — and how to inspect it</h3>
-          <p>Retrieval misses, bad chunk boundaries, entity confusion, weak verification. TruthScope makes each failure mode visible instead of averaging it away.</p>
-          <span class="note-cta">explore TruthScope ↗</span>
-        </a>
-        <a class="note-item" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener">
-          <span class="note-meta">note · shipping</span>
-          <h3>Strict JSON schemas for LLM output</h3>
-          <p>How forcing deterministic scoring schemas tamed heterogeneous résumés — and made streaming deploys painless.</p>
-          <span class="note-cta">read the code ↗</span>
-        </a>
-      </div>
-    </section>
-
-    <section id="contact" class="section reveal">
-      <div class="section-head">
-        <span class="eyebrow">say hello</span>
-        <h2 class="section-title">let's talk</h2>
-      </div>
-
-      <p class="lede">
-        i'm open to internships, research collaborations, and conversations about data science,
-        machine learning, or hard engineering problems. email probably works best — i write back.
-      </p>
-
-      <div class="contact-row">
-        <a class="contact-mail" href="mailto:soykarak@gmail.com">soykarak@gmail.com</a>
-        <button class="copy-trigger" data-copy="soykarak@gmail.com" aria-label="Copy email address">
-          <span class="copy-label">copy</span>
-        </button>
-      </div>
-
-      <div class="hero-links contact-links">
-        <a href="https://github.com/thekarak" target="_blank" rel="noopener">github</a>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <a href="https://www.linkedin.com/in/sourasiskarak" target="_blank" rel="noopener">linkedin</a>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <a href="https://x.com/imskarak" target="_blank" rel="noopener">x</a>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <button id="open-resume-btn" class="link-btn">resume</button>
-        <span class="dot-sep" aria-hidden="true">·</span>
-        <a href="assets/resume.pdf" download="Sourasis_Karak_Resume.pdf">cv.pdf</a>
-      </div>
-    </section>
-
+    <section class="section toolkit" id="toolkit" aria-labelledby="toolkit-title"><div class="section-head"><div><p class="kicker">02 / PRACTICE</p><h2 id="toolkit-title">How I approach the work<span class="heading-period">.</span></h2></div></div><div class="practice-grid">
+      <article><span class="practice-number">I.</span><h3>Make failure visible.</h3><p>Inspect individual claims and prediction errors. A single score rarely tells the whole story.</p><a href="#project-truthscope">In TruthScope ↗</a></article>
+      <article><span class="practice-number">II.</span><h3>Keep the evidence.</h3><p>Trace a result to the data, tools, and steps that produced it. Reproducibility belongs in the design.</p><a href="#project-bioagent">In BioAgent-ST ↗</a></article>
+      <article><span class="practice-number">III.</span><h3>Check the details.</h3><p>Test the implementation against a reference. Small assumptions can change the entire output.</p><a href="#project-tokenlab">In TokenLab ↗</a></article>
+    </div><dl class="tool-list"><div><dt>Languages</dt><dd>Python, SQL, JavaScript, C</dd></div><div><dt>Machine learning</dt><dd>PyTorch, scikit-learn, NumPy, pandas</dd></div><div><dt>Systems &amp; interfaces</dt><dd>FastAPI, Next.js, SQLite, Streamlit</dd></div><div><dt>Things I care about</dt><dd>Robust validation, reproducibility, provenance, clear interfaces</dd></div></dl></section>
+    <section class="section notes" id="notes" aria-labelledby="notes-title"><span id="blog" class="anchor-alias"></span><div class="section-head"><div><p class="kicker">03 / FIELD NOTES</p><h2 id="notes-title">Notes from the build<span class="heading-period">.</span></h2></div><span class="small-label">FROM THE PROJECTS</span></div><p class="section-intro">Implementation decisions, lessons, and the reasoning behind the code.</p><div class="note-list">
+      <a class="note" href="https://github.com/thekarak/RoastMeBuddy" target="_blank" rel="noopener"><span class="note-category">SHIPPING</span><span class="note-title">Strict JSON schemas for LLM output</span><span class="note-arrow" aria-hidden="true">↗</span></a>
+      <a class="note" href="https://github.com/thekarak/Bioagent-ST#what-is-bioagent-st" target="_blank" rel="noopener"><span class="note-category">AGENT SYSTEMS</span><span class="note-title">Keeping scientific claims attached to evidence</span><span class="note-arrow" aria-hidden="true">↗</span></a>
+      <a class="note" href="https://github.com/thekarak/Tokenlab#what-i-learnt" target="_blank" rel="noopener"><span class="note-category">TOKENIZATION</span><span class="note-title">What building a tokenizer actually teaches you</span><span class="note-arrow" aria-hidden="true">↗</span></a>
+    </div></section>
+    <section class="section contact" id="contact" aria-labelledby="contact-title"><p class="kicker">04 / SAY HELLO</p><h2 id="contact-title">Good work starts<br>with a conversation<span>.</span></h2><p>Have an interesting problem, a research opportunity,<br class="desktop-break"> or something you're building? I'd love to hear about it.</p><div class="contact-actions"><a class="contact-email" href="mailto:soykarak@gmail.com">soykarak@gmail.com <span aria-hidden="true">↗</span></a><button class="copy-button" type="button" data-copy="soykarak@gmail.com" aria-label="Copy email address" title="Copy email address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg></button></div><div class="contact-profiles"><a href="assets/resume.pdf" target="_blank" rel="noopener">Résumé (PDF) ↗</a><a href="https://github.com/thekarak" target="_blank" rel="noopener">GitHub ↗</a><a href="#top">Back to top ↑</a></div></section>
   </main>
-
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <span>© <span id="year">2026</span> Sourasis Karak · built by hand</span>
-      <div class="footer-right">
-        <div class="views" title="Unique browser and device view counter">
-          <span class="pulse" aria-hidden="true"></span>
-          <span>views</span>
-          <span id="views-count" class="views-count">—</span>
-        </div>
-        <button id="back-to-top" class="link-btn">top ↑</button>
-      </div>
-    </div>
-  </footer>
-
-  <div id="resume-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div>
-          <h3 id="modal-title">Sourasis Karak — Résumé</h3>
-          <span class="modal-sub">Computer Science Undergrad · ML &amp; Data Science</span>
-        </div>
-        <div class="modal-actions">
-          <a href="assets/resume.pdf" download="Sourasis_Karak_Resume.pdf" class="ghost-btn">download pdf</a>
-          <button id="close-modal-btn" class="icon-btn" aria-label="Close">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" width="16" height="16"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <img src="assets/resume.png" alt="Sourasis Karak résumé preview" />
-      </div>
-    </div>
-  </div>
-
-  <div id="toast" class="toast" aria-live="polite" aria-hidden="true">
-    <span id="toast-text">email copied to clipboard</span>
-  </div>
-
-  <script src="motion.js"></script>
-  <script src="script.js"></script>
+  <footer class="site-footer page"><span>© <span id="year">2026</span> Sourasis Karak</span><span class="footer-signoff">Made with care. Kept simple.</span><span class="footer-clock"><time id="footer-clock" aria-label="Current time in Kolkata">--:--:--</time> IST / KOLKATA</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
